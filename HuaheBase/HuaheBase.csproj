@@ -38,7 +38,9 @@
     <EmbeddedResource Include="Sxwnl\SharpSxwnl.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDef.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="Gan.cs" />
     <Compile Include="Land.cs" />
     <Compile Include="LnDate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Sxwnl\XL.cs" />
     <Compile Include="Sxwnl\xList.cs" />
     <Compile Include="Sxwnl\ZB.cs" />
+    <Compile Include="WuXing.cs" />
+    <Compile Include="Zhi.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
