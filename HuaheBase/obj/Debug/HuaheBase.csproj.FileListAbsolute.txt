@@ -1,0 +1,5 @@
+d:\visual studio 2015\Projects\HuaheBase\HuaheBase\bin\Debug\HuaheBase.dll
+d:\visual studio 2015\Projects\HuaheBase\HuaheBase\bin\Debug\HuaheBase.pdb
+d:\visual studio 2015\Projects\HuaheBase\HuaheBase\obj\Debug\HuaheBase.dll
+d:\visual studio 2015\Projects\HuaheBase\HuaheBase\obj\Debug\HuaheBase.pdb
+D:\visual studio 2015\Projects\HuaheBase\HuaheBase\obj\Debug\HuaheBase.csprojResolveAssemblyReference.cache
