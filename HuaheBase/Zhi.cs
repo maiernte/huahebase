@@ -8,6 +8,7 @@ namespace HuaheBase
 {
     public class Zhi
     {
+        #region 帮助
         private static Zhi[] instances;
         private static int[] wuxing = new int[] { 1, 4, 2, 2, 4, 3, 3, 4, 0, 0, 4, 1 };
         private static int[][] cangans = new int[][] {
@@ -26,7 +27,7 @@ namespace HuaheBase
         };
         // "子"0, "丑"1, "寅"2, "卯"3, "辰"4, "巳"5, "午"6, "未"7, "申"8, "酉"9, "戌"10, "亥"11
         private static int[] he = new int[]{ 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
-
+        #endregion
         static Zhi()
         {
             instances = new Zhi[BaseDef.Zhis.Length];
@@ -90,6 +91,22 @@ namespace HuaheBase
                           select Gan.Get(i);
                 return res.ToArray();
             }
+        }
+
+        public string 长生(Gan gan)
+        {
+            var index = gan.长生.Index;
+            var direction = (gan.Index % 2 == 0) ? 1 : -1;
+            for (var i = 0; i < 12; i++)
+            {
+                var izhi = (index + i * direction + 12) % 12;
+                if (izhi == this.Index)
+                {
+                    return BaseDef.ChangSheng[i];
+                }
+            }
+
+            return "计算长生十二宫出错";
         }
     }
 }

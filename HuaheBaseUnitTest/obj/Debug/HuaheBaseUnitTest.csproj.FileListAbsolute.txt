@@ -5,3 +5,10 @@ d:\visual studio 2015\Projects\HuaheBase\HuaheBaseUnitTest\bin\Debug\HuaheBase.p
 d:\visual studio 2015\Projects\HuaheBase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.csprojResolveAssemblyReference.cache
 d:\visual studio 2015\Projects\HuaheBase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.dll
 d:\visual studio 2015\Projects\HuaheBase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.pdb
+D:\crossplatform\huahebase\HuaheBaseUnitTest\bin\Debug\HuaheBaseUnitTest.dll
+D:\crossplatform\huahebase\HuaheBaseUnitTest\bin\Debug\HuaheBaseUnitTest.pdb
+D:\crossplatform\huahebase\HuaheBaseUnitTest\bin\Debug\HuaheBase.dll
+D:\crossplatform\huahebase\HuaheBaseUnitTest\bin\Debug\HuaheBase.pdb
+D:\crossplatform\huahebase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.csprojResolveAssemblyReference.cache
+D:\crossplatform\huahebase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.dll
+D:\crossplatform\huahebase\HuaheBaseUnitTest\obj\Debug\HuaheBaseUnitTest.pdb

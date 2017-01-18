@@ -150,6 +150,51 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual(戊, 癸.合);
         }
 
+        /// <summary>
+        /// 起月干、起时干测试
+        /// </summary>
+        [TestMethod]
+        public void GanQiGanTest()
+        {
+            Assert.AreEqual(丙, 甲.起月干);
+            Assert.AreEqual(戊, 乙.起月干);
+            Assert.AreEqual(庚, 丙.起月干);
+            Assert.AreEqual(壬, 丁.起月干);
+            Assert.AreEqual(甲, 戊.起月干);
+            Assert.AreEqual(丙, 己.起月干);
+            Assert.AreEqual(戊, 庚.起月干);
+            Assert.AreEqual(庚, 辛.起月干);
+            Assert.AreEqual(壬, 壬.起月干);
+            Assert.AreEqual(甲, 癸.起月干);
+
+            Assert.AreEqual(甲, 甲.起时干);
+            Assert.AreEqual(丙, 乙.起时干);
+            Assert.AreEqual(戊, 丙.起时干);
+            Assert.AreEqual(庚, 丁.起时干);
+            Assert.AreEqual(壬, 戊.起时干);
+            Assert.AreEqual(甲, 己.起时干);
+            Assert.AreEqual(丙, 庚.起时干);
+            Assert.AreEqual(戊, 辛.起时干);
+            Assert.AreEqual(庚, 壬.起时干);
+            Assert.AreEqual(壬, 癸.起时干);
+        }
+
+        [TestMethod]
+        public void GancChangSehngTest()
+        {
+            Assert.AreEqual(亥, 甲.长生);
+            Assert.AreEqual(寅, 丙.长生);
+            Assert.AreEqual(申, 戊.长生);
+            Assert.AreEqual(巳, 庚.长生);
+            Assert.AreEqual(申, 壬.长生);
+
+            Assert.AreEqual(午, 乙.长生);
+            Assert.AreEqual(酉, 丁.长生);
+            Assert.AreEqual(卯, 己.长生);
+            Assert.AreEqual(子, 辛.长生);
+            Assert.AreEqual(卯, 癸.长生);
+        }
+
         [TestMethod]
         public void ZhiWuXingTest()
         {
@@ -236,6 +281,37 @@ namespace HuaheBaseUnitTest
             var res12 = new Gan[] { 壬, 甲 };
             Assert.IsTrue(this.CheckGanList(res12, 亥.藏干));
         }
+
+        [TestMethod]
+        public void GanZhiChangshengTest()
+        {
+            Assert.AreEqual("长生", 亥.长生(甲));
+            Assert.AreEqual("沐浴", 子.长生(甲));
+            Assert.AreEqual("冠带", 丑.长生(甲));
+            Assert.AreEqual("临官", 寅.长生(甲));
+            Assert.AreEqual("帝旺", 卯.长生(甲));
+            Assert.AreEqual("衰", 辰.长生(甲));
+            Assert.AreEqual("病", 巳.长生(甲));
+            Assert.AreEqual("死", 午.长生(甲));
+            Assert.AreEqual("墓", 未.长生(甲));
+            Assert.AreEqual("绝", 申.长生(甲));
+            Assert.AreEqual("胎", 酉.长生(甲));
+            Assert.AreEqual("养", 戌.长生(甲));
+
+            Assert.AreEqual("长生", 酉.长生(丁));
+            Assert.AreEqual("沐浴", 申.长生(丁));
+            Assert.AreEqual("冠带", 未.长生(丁));
+            Assert.AreEqual("临官", 午.长生(丁));
+            Assert.AreEqual("帝旺", 巳.长生(丁));
+            Assert.AreEqual("衰", 辰.长生(丁));
+            Assert.AreEqual("病", 卯.长生(丁));
+            Assert.AreEqual("死", 寅.长生(丁));
+            Assert.AreEqual("墓", 丑.长生(丁));
+            Assert.AreEqual("绝", 子.长生(丁));
+            Assert.AreEqual("胎", 亥.长生(丁));
+            Assert.AreEqual("养", 戌.长生(丁));
+        }                           
+
 
         private bool CheckGanList(Gan[] l1, Gan[] l2)
         {

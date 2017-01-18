@@ -9,6 +9,7 @@ namespace HuaheBase
     public class Gan
     {
         private static Gan[] instances;
+        private static int[] changshengIndexes = new int[] { 11, 2, 8, 5, 8 };
 
         static Gan()
         {
@@ -113,6 +114,42 @@ namespace HuaheBase
             {
                 var idx = (this.Index + 5) % 10;
                 return Gan.Get(idx);
+            }
+        }
+
+        public Gan 起月干
+        {
+            get
+            {
+                var start = (this.Index % 5) * 2;
+                start = (start + 2) % 10;
+                return Gan.Get(start);
+            }
+        }
+
+        public Gan 起时干
+        {
+            get
+            {
+                var start = (this.Index % 5) * 2;
+                return Gan.Get(start);
+            }
+        }
+
+        public Zhi 长生
+        {
+            get
+            {
+                if (this.Index % 2 == 0)
+                {
+                    int idx = (int)(this.Index / 2);
+                    return Zhi.Get(changshengIndexes[idx]);
+                }
+                else
+                {
+                    int idx = (int)((this.Index - 1) / 2);
+                    return Zhi.Get((changshengIndexes[idx] + 7) % 12);
+                }
             }
         }
     }
