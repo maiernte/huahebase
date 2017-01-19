@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LunaTest.cs" />
     <Compile Include="BaseTest.cs" />
+    <Compile Include="GanZhiTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HuaheBase\HuaheBase.csproj">

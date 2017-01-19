@@ -39,11 +39,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDef.cs" />
+    <Compile Include="BaZi.cs" />
     <Compile Include="City.cs" />
     <Compile Include="Gan.cs" />
+    <Compile Include="GanZhi.cs" />
     <Compile Include="Land.cs" />
     <Compile Include="LnDate.cs" />
+    <Compile Include="Ming.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShiShen.cs" />
+    <Compile Include="ShiYun.cs" />
     <Compile Include="Sxwnl\Helper.cs" />
     <Compile Include="Sxwnl\JD.cs" />
     <Compile Include="Sxwnl\JieQiInfo.cs" />

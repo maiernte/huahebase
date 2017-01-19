@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace HuaheBase
 {
-    public class Gan
+    public class Gan : IBase
     {
         private static Gan[] instances;
         private static int[] changshengIndexes = new int[] { 11, 2, 8, 5, 8 };
@@ -27,6 +23,14 @@ namespace HuaheBase
             this.Name = name;
         }
 
+        public static string[] Names
+        {
+            get
+            {
+                return BaseDef.Gans;
+            }
+        }
+
         public static Gan Get(string name)
         {
             return instances.FirstOrDefault(g => g.Name == name);
@@ -37,11 +41,7 @@ namespace HuaheBase
             return instances.FirstOrDefault(g => g.Index == idx);
         }
 
-        public string Name { get; private set; }
-
-        public int Index { get; private set; }
-
-        public WuXing 五行
+        public override WuXing 五行
         {
             get
             {

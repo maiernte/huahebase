@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HuaheBase
+﻿namespace HuaheBase
 {
     internal static class BaseDef
     {
@@ -26,5 +20,14 @@ namespace HuaheBase
                                                          "大溪水", "沙中土", "天上火", "石榴木", "大海水" };
 
         public enum BaseTypes { WuXing = 0, Gan, Zhi, GanZhi };
+    }
+
+    public abstract class IBase
+    {
+        public string Name { get; protected set; }
+
+        public int Index { get; protected set; }
+
+        public abstract WuXing 五行 { get; }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HuaheBase
 {
-    public class WuXing
+    public class WuXing : IBase
     {
         private static WuXing[] instances;
 
@@ -36,10 +33,6 @@ namespace HuaheBase
             return instances.FirstOrDefault(wx => wx.Index == idx);
         }
 
-        public string Name { get; private set; }
-
-        public int Index { get; private set; }
-
         public WuXing 克
         {
             get
@@ -55,6 +48,14 @@ namespace HuaheBase
             {
                 var idx = (this.Index + 1) % 5;
                 return instances.FirstOrDefault(wx => wx.Index == idx);
+            }
+        }
+
+        public override WuXing 五行
+        {
+            get
+            {
+                return this;
             }
         }
     }

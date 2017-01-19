@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HuaheBase
 {
-    public class Zhi
+    public class Zhi : IBase
     {
         #region 帮助
         private static Zhi[] instances;
@@ -44,6 +44,14 @@ namespace HuaheBase
             this.Name = name;
         }
 
+        public static string[] Names
+        {
+            get
+            {
+                return BaseDef.Zhis;
+            }
+        }
+
         public static Zhi Get(string name)
         {
             return instances.FirstOrDefault(g => g.Name == name);
@@ -54,11 +62,7 @@ namespace HuaheBase
             return instances.FirstOrDefault(g => g.Index == idx);
         }
 
-        public string Name { get; private set; }
-
-        public int Index { get; private set; }
-
-        public WuXing 五行
+        public override WuXing 五行
         {
             get
             {
