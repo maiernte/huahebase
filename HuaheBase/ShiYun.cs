@@ -27,5 +27,6 @@
         }
 
         public YunType Type { get; private set; } 
+
     }
 }
