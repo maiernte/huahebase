@@ -4,6 +4,7 @@ namespace HuaheBase
 {
     public class Gan : IBase
     {
+        private static Gan zero;
         private static Gan[] instances;
         private static int[] changshengIndexes = new int[] { 11, 2, 8, 5, 8 };
 
@@ -23,6 +24,14 @@ namespace HuaheBase
             this.Name = name;
         }
 
+        public static Gan Zero
+        {
+            get
+            {
+                return Gan.zero ?? (Gan.zero = new Gan(-1, "口"));
+            }
+        }
+
         public static string[] Names
         {
             get
@@ -33,12 +42,12 @@ namespace HuaheBase
 
         public static Gan Get(string name)
         {
-            return instances.FirstOrDefault(g => g.Name == name);
+            return instances.FirstOrDefault(g => g.Name == name) ?? Gan.Zero;
         }
 
         public static Gan Get(int idx)
         {
-            return instances.FirstOrDefault(g => g.Index == idx);
+            return instances.FirstOrDefault(g => g.Index == idx) ?? Gan.Zero;
         }
 
         public override WuXing 五行
@@ -150,6 +159,30 @@ namespace HuaheBase
                     int idx = (int)((this.Index - 1) / 2);
                     return Zhi.Get((changshengIndexes[idx] + 7) % 12);
                 }
+            }
+        }
+
+        public GanZhi 起月时(Zhi zhi, bool forYue)
+        {
+            //var start = (this.Index % 5) * 2;
+            //var g = (start + zhi.Index + 10) % 10;
+            //return new GanZhi(g, zhi.Index);
+
+            if (forYue)
+            {
+                var start = (this.Index % 5) * 2;
+                start = (start + 2) % 10;
+
+                var diff = (zhi.Index - 2 + 12) % 12; //减去寅月
+                var g = (start + diff + 10) % 10;
+
+                return new GanZhi(g, zhi.Index);
+            }
+            else
+            {
+                var start = (this.Index % 5) * 2;
+                var g = (start + zhi.Index + 10) % 10;
+                return new GanZhi(g, zhi.Index);
             }
         }
     }

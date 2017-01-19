@@ -177,6 +177,15 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual(戊, 辛.起时干);
             Assert.AreEqual(庚, 壬.起时干);
             Assert.AreEqual(壬, 癸.起时干);
+
+
+            Assert.AreEqual(new GanZhi("戊午"), 戊.起月时(午, forYue: true));
+            Assert.AreEqual(new GanZhi("甲子"), 戊.起月时(子, forYue: true));
+            Assert.AreEqual(new GanZhi("乙丑"), 戊.起月时(丑, forYue: true));
+
+            Assert.AreEqual(new GanZhi("丁卯"), 甲.起月时(卯, forYue: false));
+            Assert.AreEqual(new GanZhi("甲子"), 甲.起月时(子, forYue: false));
+            Assert.AreEqual(new GanZhi("乙丑"), 甲.起月时(丑, forYue: false));
         }
 
         [TestMethod]

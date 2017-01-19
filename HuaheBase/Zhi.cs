@@ -8,6 +8,8 @@ namespace HuaheBase
 {
     public class Zhi : IBase
     {
+        private static Zhi zero;
+
         #region 帮助
         private static Zhi[] instances;
         private static int[] wuxing = new int[] { 1, 4, 2, 2, 4, 3, 3, 4, 0, 0, 4, 1 };
@@ -44,6 +46,14 @@ namespace HuaheBase
             this.Name = name;
         }
 
+        public static Zhi Zero
+        {
+            get
+            {
+                return Zhi.zero ?? (Zhi.zero = new Zhi(-1, "口"));
+            }
+        }
+
         public static string[] Names
         {
             get
@@ -54,12 +64,12 @@ namespace HuaheBase
 
         public static Zhi Get(string name)
         {
-            return instances.FirstOrDefault(g => g.Name == name);
+            return instances.FirstOrDefault(g => g.Name == name) ?? Zhi.Zero;
         }
 
         public static Zhi Get(int idx)
         {
-            return instances.FirstOrDefault(g => g.Index == idx);
+            return instances.FirstOrDefault(g => g.Index == idx) ?? Zhi.Zero;
         }
 
         public override WuXing 五行

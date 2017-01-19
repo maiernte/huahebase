@@ -5,17 +5,14 @@ namespace HuaheBase
 {
     public class GanZhi
     {
+        private static GanZhi zero;
+
         public GanZhi(int index) : this(index % 10, index % 12)
         {
         }
 
         public GanZhi(int gan, int zhi)
         {
-            if (gan < 0 || zhi < 0 || gan > 9 || zhi > 11)
-            {
-                throw new ArgumentOutOfRangeException("干支下标超出范围。");
-            }
-
             this.Gan = Gan.Get(gan);
             this.Zhi = Zhi.Get(zhi);
         }
@@ -33,11 +30,6 @@ namespace HuaheBase
         {
             this.Gan = Gan.Get(gan);
             this.Zhi = Zhi.Get(zhi);
-
-            if (this.Zhi == null)
-            {
-                throw new ArgumentOutOfRangeException($"无效的干支名称 '{gan}'-'{zhi}'。");
-            }
         }
 
         public static string[] Names
@@ -75,6 +67,14 @@ namespace HuaheBase
             }
         }
 
+        public static GanZhi Zero
+        {
+            get
+            {
+                return GanZhi.zero ?? (GanZhi.zero = new GanZhi(-1, -1));
+            }
+        }
+
         public Gan Gan { get; private set; }
 
         public Zhi Zhi { get; private set; }
@@ -83,7 +83,7 @@ namespace HuaheBase
         {
             get
             {
-                return this.Gan?.Name + this.Zhi.Name;
+                return this.Gan.Name + this.Zhi.Name;
             }
         }
 
@@ -104,9 +104,31 @@ namespace HuaheBase
             }
         }
 
+        public bool TheSame(object obj)
+        {
+            return this.GetHashCode() == obj.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            GanZhi gz = obj as GanZhi;
+            return obj is GanZhi && this.Name == gz.Name;
+        }
+
+        public static bool operator == (GanZhi a, GanZhi b)
+        {
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(GanZhi a, GanZhi b)
+        {
+            return !a.Equals(b);
+        }
+
         private int CalcIndex()
         {
-            if(this.Gan == null)
+            if(this.Gan == Gan.Zero)
             {
                 return -1;
             }

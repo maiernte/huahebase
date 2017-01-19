@@ -108,5 +108,41 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("孙", 十神.Calc5(丙, 戌, shortname: true));
             Assert.AreEqual("官", 十神.Calc5(丙, 亥, shortname: true));
         }
+
+        [TestMethod]
+        public void OperatorTest()
+        {
+            GanZhi gz1 = new GanZhi("壬戌");
+            GanZhi gz2 = new GanZhi(58);
+            GanZhi gz3 = new GanZhi(40);
+
+            Assert.IsTrue(gz1 == gz2);
+            Assert.IsTrue(gz2.Equals(gz1));
+            Assert.IsFalse(gz1.TheSame(gz2));
+
+            Assert.IsTrue(gz1 != gz3);
+        }
+
+        [TestMethod]
+        public void EmptyTest()
+        {
+            Gan zeroG = Gan.Zero;
+            Assert.AreEqual(-1, zeroG.Index);
+            Assert.AreEqual("口", zeroG.Name);
+
+            Zhi zeroZ = Zhi.Zero;
+            Assert.AreEqual(-1, zeroZ.Index);
+            Assert.AreEqual("口", zeroZ.Name);
+
+            GanZhi zero = GanZhi.Zero;
+            Assert.IsNotNull(zero);
+            Assert.AreEqual(-1, zero.Index);
+            Assert.AreEqual("口口", zero.Name);
+
+            GanZhi half = new GanZhi(string.Empty, "卯");
+            Assert.IsNotNull(half);
+            Assert.AreEqual(-1, half.Index);
+            Assert.AreEqual("口卯", half.Name);
+        }
     }
 }

@@ -11,17 +11,15 @@ namespace HuaheBase
     /// </summary>
     public class Ming
     {
-        public Ming(string nian, string yue, string ri, string shi)
+        private BaZiList bazi;
+
+        public Ming(DateTime date, bool sureTime = true)
         {
-            this.四柱 = new BaZiList(nian, yue, ri, shi);
+            LnDate lndate = new LnDate(date);
+            this.bazi = new BaZiList(lndate.YearGZ, lndate.MonthGZ, lndate.DayGZ, string.Empty);
         }
 
-        public Ming(GanZhi nian, GanZhi yue, GanZhi ri, GanZhi shi)
-        {
-            this.四柱 = new BaZiList(nian, yue, ri, shi);
-        }
-
-        public BaZiList 四柱 { get; private set; }
+        public IEnumerable<ShiYun> 四柱 { get; private set; }
 
         public bool ShortText { get; set; } = false;
     }
