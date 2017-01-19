@@ -1,8 +1,0 @@
-d:\visual studio 2015\Projects\HuaheBase\HuaheBase\bin\Debug\HuaheBase.dll
-d:\visual studio 2015\Projects\HuaheBase\HuaheBase\bin\Debug\HuaheBase.pdb
-d:\visual studio 2015\Projects\HuaheBase\HuaheBase\obj\Debug\HuaheBase.dll
-d:\visual studio 2015\Projects\HuaheBase\HuaheBase\obj\Debug\HuaheBase.pdb
-D:\crossplatform\huahebase\HuaheBase\bin\Debug\HuaheBase.dll
-D:\crossplatform\huahebase\HuaheBase\bin\Debug\HuaheBase.pdb
-D:\crossplatform\huahebase\HuaheBase\obj\Debug\HuaheBase.dll
-D:\crossplatform\huahebase\HuaheBase\obj\Debug\HuaheBase.pdb
