@@ -93,5 +93,71 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("己丑", dahan.MonthGZ);
             Assert.AreEqual("壬寅", dahan.DayGZ);
         }
+
+        [TestMethod]
+        public void SearchYearTest()
+        {
+            PrivateType lndate = new PrivateType(typeof(LnDate));
+
+            int startYear = 2017;
+            var res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丙申", startYear, -1 });
+            Assert.AreEqual(2016 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丁酉", startYear, -1 });
+            Assert.AreEqual(1957 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊戌", startYear, -1 });
+            Assert.AreEqual(1958 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊午", startYear, -1 });
+            Assert.AreEqual(1978 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊戌", startYear, 1 });
+            Assert.AreEqual(2018 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丁酉", startYear, 1 });
+            Assert.AreEqual(2017 - startYear, res);
+
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丙申", startYear, 1 });
+            Assert.AreEqual(2076 - startYear, res);
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void SearchFaildTest()
+        {
+            DateTime res = LnDate.SearchBazi("戊午", "甲午", "", 2017, -1);
+        }
+
+        [TestMethod]
+        public void SearchTest()
+        {
+            DateTime res = LnDate.SearchBazi("戊午", "戊午", "甲子", 2017, -1);
+            Assert.AreEqual(new DateTime(1978, 7, 1), res);
+
+            res = LnDate.SearchBazi("丁酉", "壬寅", "壬戌", 2016, 1);
+            Assert.AreEqual(new DateTime(2017, 2, 4), res);
+
+            res = LnDate.SearchBazi("丙申", "辛丑", "辛酉", 2016, 1);
+            Assert.AreEqual(new DateTime(2017, 2, 3), res);
+
+            res = LnDate.SearchBazi("丁亥", "庚戌", "己巳", 1930, -1);
+            Assert.AreEqual(new DateTime(1887, 10, 31), res);
+
+            res = LnDate.SearchNL(1978, "五", "廿六", false);
+            Assert.AreEqual(new DateTime(1978, 7, 1), res);
+
+            try
+            {
+                res = LnDate.SearchNL(1978, "五", "廿六", true);
+                Assert.IsTrue(false, "应该找不到");
+            }
+            catch (Exception)
+            {
+            }
+
+            res = LnDate.SearchNL(2017, "六", "初一", true);
+            Assert.AreEqual(new DateTime(2017, 7, 23), res);
+        }
     }
 }

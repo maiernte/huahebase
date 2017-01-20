@@ -17,8 +17,25 @@ namespace HuaheBase
             this.Zhi = Zhi.Get(zhi);
         }
 
-        public GanZhi(string name) : this(name.Substring(0, 1), name.Substring(1, 1))
+        public GanZhi(string name) 
         {
+            string g = string.Empty;
+            string z = string.Empty;
+            if(string.IsNullOrEmpty(name) || name.Length > 2)
+            {
+                this.Gan = Gan.Zero;
+                this.Zhi = Zhi.Zero;
+            }
+            else if(name.Length == 1)
+            {
+                this.Gan = Gan.Zero;
+                this.Zhi = Zhi.Get(name);
+            }
+            else
+            {
+                this.Gan = Gan.Get(name.Substring(0, 1));
+                this.Zhi = Zhi.Get(name.Substring(1, 1));
+            }
         }
 
         /// <summary>

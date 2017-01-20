@@ -58,23 +58,4 @@
             }
         }
     }
-
-    //public class TestList<T>: System.Collections.Generic.List<T>
-    //{
-    //    public TestList(T nian, T yue, T ri, T shi)
-    //    {
-    //        this.Add(nian);
-    //        this.Add(yue);
-    //        this.Add(ri);
-    //        this.Add(shi);
-    //    }
-
-    //    public T 时柱
-    //    {
-    //        get
-    //        {
-    //            return this[3];
-    //        }
-    //    }
-    //}
 }
