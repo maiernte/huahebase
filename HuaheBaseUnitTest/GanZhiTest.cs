@@ -42,7 +42,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("壬戌", renxu.Name);
             
             GanZhi xu = new GanZhi(string.Empty, "戌");
-            Assert.IsNull(xu.Gan);
+            Assert.AreEqual(Gan.Zero, xu.Gan);
             Assert.AreEqual(-1, xu.Index);
 
             GanZhi gz1 = new GanZhi(8, 10);
@@ -143,6 +143,30 @@ namespace HuaheBaseUnitTest
             Assert.IsNotNull(half);
             Assert.AreEqual(-1, half.Index);
             Assert.AreEqual("口卯", half.Name);
+
+            GanZhi full = new GanZhi(string.Empty, string.Empty);
+            Assert.IsNotNull(full);
+            Assert.AreEqual(zero, full);
+
+            GanZhi minus = new GanZhi(-1);
+            Assert.AreEqual(zero, minus);
+        }
+
+        [TestMethod]
+        public void AddNumTest()
+        {
+            GanZhi wuwu = new GanZhi("戊午");
+            GanZhi genshen = wuwu.Add(2);
+            Assert.AreEqual(genshen, new GanZhi("庚申"));
+
+            GanZhi bingchen = wuwu.Add(-2);
+            Assert.AreEqual(bingchen, new GanZhi("丙辰"));
+
+            GanZhi bingchen1 = wuwu.Add(-122);
+            Assert.AreEqual(bingchen, bingchen1);
+
+            GanZhi wuwu1 = wuwu.Add(180);
+            Assert.AreEqual(wuwu, wuwu1);
         }
     }
 }

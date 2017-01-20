@@ -126,6 +126,15 @@ namespace HuaheBase
             return !a.Equals(b);
         }
 
+        public GanZhi Add(int num)
+        {
+            int g = this.Gan == Gan.Zero ? -1 : (this.Gan.Index + num) % 10;
+            int z = this.Zhi == Zhi.Zero ? -1 : (this.Zhi.Index + num) % 12;
+            g = g >= 0 ? g : (g + 10) % 10;
+            z = z >= 0 ? z : (z + 12) % 12;
+            return new GanZhi(g, z);
+        }
+
         private int CalcIndex()
         {
             if(this.Gan == Gan.Zero)

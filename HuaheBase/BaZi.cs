@@ -3,33 +3,30 @@
     /// <summary>
     /// 基本的八字结构
     /// </summary>
-    public class BaZiList: System.Collections.Generic.List<GanZhi>
+    public class BaZiList<T>: System.Collections.Generic.List<T>
     {
-        public BaZiList(string nian, string yue, string ri, string shi)
-            : this(new GanZhi(nian), new GanZhi(yue), new GanZhi(ri), string.IsNullOrEmpty(shi) ? null : new GanZhi(shi))
-        {
-        }
+        //public BaZiList(string nian, string yue, string ri, string shi)
+        //    : this(new GanZhi(nian), new GanZhi(yue), new GanZhi(ri), string.IsNullOrEmpty(shi) ? GanZhi.Zero : new GanZhi(shi))
+        //{
+        //}
 
-        public BaZiList(GanZhi nian, GanZhi yue, GanZhi ri, GanZhi shi)
+        public BaZiList(T nian, T yue, T ri, T shi)
         {
             this.Add(nian);
             this.Add(yue);
             this.Add(ri);
-            if(shi != null)
-            {
-                this.Add(shi);
-            }
+            this.Add(shi);
         }
 
         public Gan 日主
         {
             get
             {
-                return this[2].Gan;
+                return (this[2] as GanZhi).Gan;
             }
         }
 
-        public GanZhi 年柱
+        public T 年柱
         {
             get
             {
@@ -37,7 +34,7 @@
             }
         }
 
-        public GanZhi 月柱
+        public T 月柱
         {
             get
             {
@@ -45,7 +42,7 @@
             }
         }
 
-        public GanZhi 日柱
+        public T 日柱
         {
             get
             {
@@ -53,12 +50,31 @@
             }
         }
 
-        public GanZhi 时柱
+        public T 时柱
         {
             get
             {
-                return this.Count == 4 ? this[3] : null;
+                return this[3];
             }
         }
     }
+
+    //public class TestList<T>: System.Collections.Generic.List<T>
+    //{
+    //    public TestList(T nian, T yue, T ri, T shi)
+    //    {
+    //        this.Add(nian);
+    //        this.Add(yue);
+    //        this.Add(ri);
+    //        this.Add(shi);
+    //    }
+
+    //    public T 时柱
+    //    {
+    //        get
+    //        {
+    //            return this[3];
+    //        }
+    //    }
+    //}
 }

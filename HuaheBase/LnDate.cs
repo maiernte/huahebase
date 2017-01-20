@@ -86,6 +86,12 @@ namespace HuaheBase
 
         public TimeSpan JieQiTime { get; private set; }
 
+        public LnDate Add(int num)
+        {
+            DateTime newday = this.datetime.AddDays(num);
+            return new LnDate(newday);
+        }
+
         private void Initial()
         {
             OB ob = LnDate.lunar.lun.FirstOrDefault(o => o.d == this.datetime.Day);
@@ -111,6 +117,10 @@ namespace HuaheBase
                 // 过了23点已经算明天了。
                 this.JieQi = string.Empty;
                 this.JieQiTime = TimeSpan.Zero;
+
+                OB yesterday = LnDate.lunar.lun.FirstOrDefault(o => o.d == this.datetime.Day - 1);
+                this.MonthGZ = yesterday.Lmonth2;
+                this.YearGZ = yesterday.Lyear2;
             }
 
             if(this.datetime.Day > 1)
