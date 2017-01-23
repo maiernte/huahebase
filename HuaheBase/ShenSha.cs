@@ -51,13 +51,23 @@ namespace HuaheBase
         {
             return ShenShaBase.instances.FirstOrDefault(ss => ss.Name == name);
         }
+
+        internal Zhi Calc(GanZhi gz)
+        {
+            if(this.Fetch != null)
+            {
+                return Zhi.Get(this.Pattern[this.Fetch(gz)]);
+            }
+
+            return Zhi.Zero;
+        }
     }
 
     public class ShenSha
     {
         private ShenShaBase ssBase;
 
-        public ShenSha(string name, string[] gz)
+        public ShenSha(string name, GanZhi[] gz)
         {
             this.ssBase = ShenShaBase.Get(name);
             this.GZ = gz;
@@ -65,8 +75,14 @@ namespace HuaheBase
 
         public BaZiList<GanZhi> Bazi { get; set; }
 
-        public string Name { get; private set; }
+        public string Name { get { return this.ssBase.Name; } }
 
-        public string[] GZ { get; private set; }
+        public GanZhi[] GZ { get; private set; }
+
+        public Zhi[] Calc()
+        {
+            var res = this.GZ.Select(gz => this.ssBase.Calc(gz));
+            return res.Distinct().ToArray();
+        }
     }
 }

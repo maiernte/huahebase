@@ -1,6 +1,7 @@
 ﻿using System;
 using HuaheBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace HuaheBaseUnitTest
 {
@@ -43,9 +44,16 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void MingJuTest()
+        public void ShenShaTest()
         {
+            DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);
+            Ming ming = new Ming(day);
 
+            ShenSha 桃花 = new ShenSha("桃花", new GanZhi[] { ming.四柱.年, ming.四柱.日 });
+            Assert.AreEqual("桃花", 桃花.Name);
+            Assert.AreEqual("卯,酉", string.Join(",",桃花.Calc().Select(t => t.Name)));
+            
+      
         }
     }
 }

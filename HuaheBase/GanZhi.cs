@@ -9,12 +9,15 @@ namespace HuaheBase
 
         public GanZhi(int index) : this(index % 10, index % 12)
         {
+            this.ValidCheck();
         }
 
         public GanZhi(int gan, int zhi)
         {
             this.Gan = Gan.Get(gan);
             this.Zhi = Zhi.Get(zhi);
+
+            this.ValidCheck();
         }
 
         public GanZhi(string name) 
@@ -36,6 +39,8 @@ namespace HuaheBase
                 this.Gan = Gan.Get(name.Substring(0, 1));
                 this.Zhi = Zhi.Get(name.Substring(1, 1));
             }
+
+            this.ValidCheck();
         }
 
         /// <summary>
@@ -47,6 +52,8 @@ namespace HuaheBase
         {
             this.Gan = Gan.Get(gan);
             this.Zhi = Zhi.Get(zhi);
+
+            this.ValidCheck();
         }
 
         public static string[] Names
@@ -163,6 +170,22 @@ namespace HuaheBase
                 var iTemp = ((this.Zhi.Index - this.Gan.Index + 12) % 12) / 2;
                 iTemp = ((6 - iTemp) % 6) * 10;
                 return iTemp + this.Gan.Index;
+            }
+        }
+
+        private void ValidCheck()
+        {
+            if(this.Gan != Gan.Zero && this.Zhi != Zhi.Zero)
+            {
+                if (this.Gan.Index % 2 != this.Zhi.Index % 2)
+                {
+                    throw new ArgumentException("参数错误，这个干支不存在。");
+                }
+            }
+
+            if(this.Gan != Gan.Zero && this.Zhi == Zhi.Zero)
+            {
+                throw new ArgumentException("不接受有干无支");
             }
         }
     }

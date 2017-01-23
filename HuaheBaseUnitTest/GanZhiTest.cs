@@ -53,6 +53,37 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
+        public void FalseGZTest()
+        {
+            try
+            {
+                var gz = new GanZhi(1, 2);
+                Assert.IsTrue(false);
+            }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
+                var gz = new GanZhi("甲", "亥");
+                Assert.IsTrue(false);
+            }
+            catch (Exception)
+            {
+            }
+
+            try
+            {
+                var gz = new GanZhi("甲", "牛");
+                Assert.IsTrue(false);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        [TestMethod]
         public void NaYinTest()
         {
             GanZhi gz = new GanZhi("壬戌");
