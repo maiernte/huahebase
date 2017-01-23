@@ -45,7 +45,8 @@ namespace HuaheBaseUnitTest
         [TestMethod]
         public void MingJuTest()
         {
-
+            //TODOÖ Test Stasch
+            Assert.IsTrue(true);
         }
     }
 }
