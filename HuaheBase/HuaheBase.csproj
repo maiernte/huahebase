@@ -43,6 +43,8 @@
     <Compile Include="City.cs" />
     <Compile Include="Gan.cs" />
     <Compile Include="GanZhi.cs" />
+    <Compile Include="Gua64.cs" />
+    <Compile Include="Gua8.cs" />
     <Compile Include="Land.cs" />
     <Compile Include="LnDate.cs" />
     <Compile Include="Ming.cs" />
