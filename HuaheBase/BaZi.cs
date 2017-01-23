@@ -26,7 +26,7 @@
             }
         }
 
-        public T 年柱
+        public T 年
         {
             get
             {
@@ -34,7 +34,7 @@
             }
         }
 
-        public T 月柱
+        public T 月
         {
             get
             {
@@ -42,7 +42,7 @@
             }
         }
 
-        public T 日柱
+        public T 日
         {
             get
             {
@@ -50,7 +50,7 @@
             }
         }
 
-        public T 时柱
+        public T 时
         {
             get
             {

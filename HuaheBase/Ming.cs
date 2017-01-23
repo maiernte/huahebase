@@ -36,10 +36,10 @@ namespace HuaheBase
             this.bazi = new BaZiList<GanZhi>(year, month, day, shi);
 
             List<ShiYun> tmp = new List<ShiYun>();
-            tmp.Add(new ShiYun(this.bazi.年柱, ShiYun.YunType.命局, this.bazi));
-            tmp.Add(new ShiYun(this.bazi.月柱, ShiYun.YunType.命局, this.bazi));
-            tmp.Add(new ShiYun(this.bazi.日柱, ShiYun.YunType.命局, this.bazi));
-            tmp.Add(new ShiYun(this.bazi.时柱, ShiYun.YunType.命局, this.bazi));
+            tmp.Add(new ShiYun(this.bazi.年, ShiYun.YunType.命局, this.bazi));
+            tmp.Add(new ShiYun(this.bazi.月, ShiYun.YunType.命局, this.bazi));
+            tmp.Add(new ShiYun(this.bazi.日, ShiYun.YunType.命局, this.bazi));
+            tmp.Add(new ShiYun(this.bazi.时, ShiYun.YunType.命局, this.bazi));
             this.四柱 = new BaZiList<ShiYun>(tmp[0], tmp[1], tmp[2], tmp[3]);
         }
 
