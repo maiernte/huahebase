@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace HuaheBase
 {
+    public enum 性别 { 男 = 0, 女, 无}
+
     /// <summary>
     /// 命盘，包含所有的时运、神煞
     /// </summary>

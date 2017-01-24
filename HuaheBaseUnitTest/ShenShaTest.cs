@@ -331,6 +331,7 @@ namespace HuaheBaseUnitTest
 
             ShenSha ss乙卯 = new ShenSha(name, new GanZhi[] { new GanZhi("乙卯") });
             ShenSha ss壬戌 = new ShenSha(name, new GanZhi[] { new GanZhi("壬戌") });
+            ShenSha ss丁未 = new ShenSha(name, new GanZhi[] { new GanZhi("丁未") });
 
             Assert.AreEqual("戌亥", string.Join("", ss甲子.Calc()));
             Assert.AreEqual("子丑", string.Join("", ss甲寅.Calc()));
@@ -341,6 +342,148 @@ namespace HuaheBaseUnitTest
 
             Assert.AreEqual("子丑", string.Join("", ss乙卯.Calc()));
             Assert.AreEqual("子丑", string.Join("", ss壬戌.Calc()));
+            Assert.AreEqual("寅卯", string.Join("", ss丁未.Calc()));
+        }
+
+        [TestMethod]
+        public void 魁罡Test()
+        {
+            string name = "魁罡";
+            ShenSha 庚戌 = new ShenSha(name, new GanZhi[] { new GanZhi("庚戌") });
+            Assert.AreEqual(string.Empty, string.Join("", 庚戌.Calc()));
+
+            ShenSha 庚辰 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰") });
+            Assert.AreEqual(string.Empty, string.Join("", 庚辰.Calc()));
+
+            ShenSha 戊戌 = new ShenSha(name, new GanZhi[] { new GanZhi("戊戌") });
+            Assert.AreEqual(string.Empty, string.Join("", 戊戌.Calc()));
+
+            ShenSha 壬辰 = new ShenSha(name, new GanZhi[] { new GanZhi("壬辰") });
+            Assert.AreEqual(string.Empty, string.Join("", 壬辰.Calc()));
+
+            ShenSha ss甲子 = new ShenSha(name, new GanZhi[] { new GanZhi("甲子") });
+            Assert.IsNull(ss甲子.Calc());
+        }
+
+        [TestMethod]
+        public void 四废Test()
+        {
+            string name = "四废";
+            
+            // 寅卯月见庚申、辛酉
+            // 春庚申，辛酉，夏壬子，癸亥，秋甲寅，乙卯，冬丙午，丁巳
+            BaZiList<GanZhi> bazi1 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲寅"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi2 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲午"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi3 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲申"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi4 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲子"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+
+            ShenSha ss庚申 = new ShenSha(name, new GanZhi[] { new GanZhi("庚申") });
+            ss庚申.Bazi = bazi1;
+            Assert.AreEqual(string.Empty, string.Join("", ss庚申.Calc()));
+
+            ShenSha ss壬子 = new ShenSha(name, new GanZhi[] { new GanZhi("壬子") });
+            ss壬子.Bazi = bazi2;
+            Assert.AreEqual(string.Empty, string.Join("", ss壬子.Calc()));
+
+            ShenSha ss乙卯 = new ShenSha(name, new GanZhi[] { new GanZhi("乙卯") });
+            ss乙卯.Bazi = bazi3;
+            Assert.AreEqual(string.Empty, string.Join("", ss乙卯.Calc()));
+
+            ShenSha ss丁巳 = new ShenSha(name, new GanZhi[] { new GanZhi("丁巳"), new GanZhi("甲子") , new GanZhi("丁酉")});
+            ss丁巳.Bazi = bazi4;
+            Assert.AreEqual(string.Empty, string.Join("", ss丁巳.Calc()));
+
+            ShenSha ss甲子 = new ShenSha(name, new GanZhi[] { new GanZhi("甲子"), new GanZhi("丁酉") });
+            ss甲子.Bazi = bazi4;
+            Assert.IsNull(ss甲子.Calc());
+
+            BaZiList<GanZhi> bazi5 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲辰"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            ShenSha ss = new ShenSha(name, new GanZhi[] { new GanZhi("庚申"), new GanZhi("壬子"), new GanZhi("乙卯") });
+            ss.Bazi = bazi5;
+            Assert.IsNull(ss.Calc());
+        }
+
+        [TestMethod]
+        public void 孤辰寡宿Test()
+        {
+            string name = "孤辰寡宿";
+
+            // 亥子丑年生人，柱中见寅为孤见戌为寡
+            // 寅卯辰年生人，柱中见巳为孤见丑为寡
+            // 巳午未年生人，柱中见申为孤见辰为寡
+            // 申酉戌年生人，柱中见亥为孤见未为寡
+            BaZiList<GanZhi> bazi1 = new BaZiList<GanZhi>(new GanZhi("甲子"), new GanZhi("甲寅"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi2 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲午"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi3 = new BaZiList<GanZhi>(new GanZhi("甲午"), new GanZhi("甲申"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi4 = new BaZiList<GanZhi>(new GanZhi("甲戌"), new GanZhi("甲子"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+
+            ShenSha ss庚寅 = new ShenSha(name, new GanZhi[] { new GanZhi("庚寅") });
+            ss庚寅.Bazi = bazi1;
+            Assert.AreEqual(string.Empty, string.Join("", ss庚寅.Calc()));
+
+            ShenSha ss丁巳 = new ShenSha(name, new GanZhi[] { new GanZhi("丁巳") });
+            ss丁巳.Bazi = bazi2;
+            Assert.AreEqual(string.Empty, string.Join("", ss丁巳.Calc()));
+
+            ShenSha ss庚辰 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰") });
+            ss庚辰.Bazi = bazi3;
+            Assert.AreEqual(string.Empty, string.Join("", ss庚辰.Calc()));
+
+            ShenSha ss丁亥 = new ShenSha(name, new GanZhi[] { new GanZhi("丁亥") });
+            ss丁亥.Bazi = bazi4;
+            Assert.AreEqual(string.Empty, string.Join("", ss丁亥.Calc()));
+
+            ShenSha ss = new ShenSha(name, new GanZhi[] { new GanZhi("庚申"), new GanZhi("壬子"), new GanZhi("乙卯") });
+            ss.Bazi = bazi1;
+            Assert.IsNull(ss.Calc());
+        }
+
+        [TestMethod]
+        public void 阴差阳错Test()
+        {
+            string name = "阴差阳错";
+
+            ShenSha ss = new ShenSha(name, new GanZhi[] { new GanZhi("庚申"), new GanZhi("壬子"), new GanZhi("乙卯") });
+            Assert.IsNull(ss.Calc());
+
+            ShenSha ss1 = new ShenSha(name, new GanZhi[] { new GanZhi("辛酉"), new GanZhi("壬子"), new GanZhi("乙卯") });
+            Assert.AreEqual(string.Empty, string.Join("", ss1.Calc()));
+        }
+
+        [TestMethod]
+        public void 天罗地网Test()
+        {
+            string name = "天罗地网";
+
+            ShenSha ss = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("甲辰"), new GanZhi("乙卯") });
+            ss.性别 = 性别.男;
+            Assert.IsNull(ss.Calc());
+
+            ShenSha ss1 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
+            ss1.性别 = 性别.男;
+            Assert.AreEqual(string.Empty, string.Join("", ss1.Calc()));
+
+            ShenSha ss2 = new ShenSha(name, new GanZhi[] { new GanZhi("庚戌"), new GanZhi("甲戌"), new GanZhi("乙卯") });
+            ss2.性别 = 性别.女;
+            Assert.IsNull(ss2.Calc());
+
+            ShenSha ss3 = new ShenSha(name, new GanZhi[] { new GanZhi("庚戌"), new GanZhi("壬子"), new GanZhi("乙亥") });
+            ss3.性别 = 性别.女;
+            Assert.AreEqual(string.Empty, string.Join("", ss3.Calc()));
+
+            ShenSha ss4 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
+            ss4.性别 = 性别.女;
+            Assert.IsNull(ss4.Calc());
+
+            try
+            {
+                ShenSha ss5 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
+                var res = ss5.Calc();
+                Assert.IsTrue(false);
+            }
+            catch (Exception ex)
+            {
+            }
         }
     }
 }
