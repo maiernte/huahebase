@@ -20,5 +20,12 @@
 
         public BaZiList<GanZhi> Base { get; private set; }
 
+        public string 宫位
+        {
+            get
+            {
+                return this.Zhi.长生(this.Base.日主);
+            }
+        }
     }
 }

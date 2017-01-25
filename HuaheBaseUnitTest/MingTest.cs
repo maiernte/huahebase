@@ -96,6 +96,26 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
+        public void 宫位纳音Test()
+        {
+            DateTime day = new DateTime(2017, 1, 25, 13, 45, 0);
+            Ming ming = new Ming(day, 性别.男);
+
+            Assert.AreEqual("长生", ming.四柱.年.宫位);
+            Assert.AreEqual("衰",   ming.四柱.月.宫位);
+            Assert.AreEqual("帝旺", ming.四柱.日.宫位);
+            Assert.AreEqual("养",   ming.四柱.时.宫位);
+
+            Assert.AreEqual("山下火", ming.四柱.年.纳音);
+            Assert.AreEqual("壁上土", ming.四柱.月.纳音);
+            Assert.AreEqual("桑松木", ming.四柱.日.纳音);
+            Assert.AreEqual("天河水", ming.四柱.时.纳音);
+
+            Assert.AreEqual("己庚壬", string.Join("", ming.四柱.年.Zhi.藏干.Select(g => g.Name)));
+  
+        }
+
+        [TestMethod]
         public void 神煞Test()
         {
             DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);

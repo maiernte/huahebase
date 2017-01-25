@@ -9,7 +9,7 @@ namespace HuaheBaseUnitTest
     public class LunaTest
     {
         [TestMethod]
-        public void LunaObjTest()
+        public void Luna对象Test()
         {
             Lunar lunar = new Lunar();
             lunar.yueLiCalc(2017, 1);
@@ -19,7 +19,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void LnDateTest()
+        public void LnDate构造函数Test()
         {
             LnDate date = new LnDate(new DateTime(2017, 2, 3));
             Assert.AreEqual(DateTime.Now.Year, date.Year);
@@ -48,7 +48,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void JieQieTest()
+        public void 节气Test()
         {
             // 2017.2.3 晚 23后换月令 所以当天还是
             LnDate date = new LnDate(new DateTime(2017, 2, 3));
@@ -95,69 +95,77 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void SearchYearTest()
+        public void 查找年份Test()
         {
-            PrivateType lndate = new PrivateType(typeof(LnDate));
+            PrivateType lndate = new PrivateType(typeof(LnBase));
 
             int startYear = 2017;
-            var res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丙申", startYear, -1 });
+            var res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("丙申"), startYear, 方向.逆行 });
             Assert.AreEqual(2016 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丁酉", startYear, -1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("丁酉"), startYear, 方向.逆行 });
             Assert.AreEqual(1957 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊戌", startYear, -1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("戊戌"), startYear, 方向.逆行 });
             Assert.AreEqual(1958 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊午", startYear, -1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("戊午"), startYear, 方向.逆行 });
             Assert.AreEqual(1978 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "戊戌", startYear, 1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("戊戌"), startYear, 方向.顺行 });
             Assert.AreEqual(2018 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丁酉", startYear, 1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("丁酉"), startYear, 方向.顺行 });
             Assert.AreEqual(2017 - startYear, res);
 
-            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { "丙申", startYear, 1 });
+            res = (int)lndate.InvokeStatic("CalcYearDiff", new object[] { new GanZhi("丙申"), startYear, 方向.顺行 });
             Assert.AreEqual(2076 - startYear, res);
         }
 
         [ExpectedException(typeof(ArgumentException))]
         [TestMethod]
-        public void SearchFaildTest()
+        public void 查八字失败Test()
         {
-            DateTime res = LnDate.SearchBazi("戊午", "甲午", "", 2017, -1);
+            DateTime res = LnBase.SearchBazi("戊午", "甲午", "", 2017, 方向.逆行);
         }
 
         [TestMethod]
-        public void SearchTest()
+        public void 查八字Test()
         {
-            DateTime res = LnDate.SearchBazi("戊午", "戊午", "甲子", 2017, -1);
+            DateTime res = LnBase.SearchBazi("戊午", "戊午", "甲子", 2017, 方向.逆行);
             Assert.AreEqual(new DateTime(1978, 7, 1), res);
 
-            res = LnDate.SearchBazi("丁酉", "壬寅", "壬戌", 2016, 1);
+            res = LnBase.SearchBazi("丁酉", "壬寅", "壬戌", 2016, 方向.顺行);
             Assert.AreEqual(new DateTime(2017, 2, 4), res);
 
-            res = LnDate.SearchBazi("丙申", "辛丑", "辛酉", 2016, 1);
+            res = LnBase.SearchBazi("丙申", "辛丑", "辛酉", 2016, 方向.顺行);
             Assert.AreEqual(new DateTime(2017, 2, 3), res);
 
-            res = LnDate.SearchBazi("丁亥", "庚戌", "己巳", 1930, -1);
+            res = LnBase.SearchBazi("丁亥", "庚戌", "己巳", 1930, 方向.逆行);
             Assert.AreEqual(new DateTime(1887, 10, 31), res);
 
-            res = LnDate.SearchNL(1978, "五", "廿六", false);
+            res = LnBase.SearchNL(1978, "五", "廿六", false);
             Assert.AreEqual(new DateTime(1978, 7, 1), res);
 
             try
             {
-                res = LnDate.SearchNL(1978, "五", "廿六", true);
+                res = LnBase.SearchNL(1978, "五", "廿六", true);
                 Assert.IsTrue(false, "应该找不到");
             }
             catch (Exception)
             {
             }
 
-            res = LnDate.SearchNL(2017, "六", "初一", true);
+            res = LnBase.SearchNL(2017, "六", "初一", true);
             Assert.AreEqual(new DateTime(2017, 7, 23), res);
+        }
+
+        [TestMethod]
+        public void 查节气()
+        {
+            TimeSpan ts = LnBase.查找节气(new DateTime(2017, 2, 4, 5, 0, 0), 方向.逆行);
+            Assert.AreNotEqual(TimeSpan.Zero, ts);
+            Assert.AreEqual(-5, ts.Hours);
         }
     }
 }

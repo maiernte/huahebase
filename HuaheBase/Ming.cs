@@ -8,6 +8,7 @@ namespace HuaheBase
 {
     public enum 性别 { 男 = 0, 女, 无}
     public enum 柱位 { 年 = 0, 月, 日, 时}
+    public enum 方向 { 顺行 = 0, 逆行}
 
     /// <summary>
     /// 命盘，包含所有的时运、神煞
@@ -154,6 +155,27 @@ namespace HuaheBase
             });
 
             return sum.Select((num, idx) => new Tuple<string, int>(BaseDef.WuXings[idx], num));
+        }
+
+        private ShiYun[] 起大运(DateTime birthday, 性别 gender)
+        {
+
+            return null;
+        }
+
+        private DateTime 起运时间(DateTime birthday)
+        {
+            // 阳男阴女顺行
+            var direction = (this.性别 == 性别.男 ? 1 : -1) * (this.四柱.年.Zhi.Index % 2 == 0 ? 1 : -1);
+
+            //var jieqi = TYLunar.findNextJieQi(this.Birthday, direction);
+
+            //var timespan = Math.abs(jieqi.getTime() - this.Birthday.getTime());
+            //var hoursOff = (timespan / (1000 * 60)) * 2;
+            //var dayunTime = new Date(this.Birthday.getTime() + hoursOff * (1000 * 60 * 60));
+
+            //return dayunTime;
+            return DateTime.Now;
         }
     }
 }

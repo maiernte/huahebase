@@ -1,6 +1,7 @@
 ﻿using System;
 using HuaheBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace HuaheBaseUnitTest
 {
@@ -32,7 +33,7 @@ namespace HuaheBaseUnitTest
         Zhi 亥 = Zhi.Get("亥");
 
         [TestMethod]
-        public void ConstrucktorTest()
+        public void 构造函数Test()
         {
             GanZhi gz = new GanZhi("壬戌");
             Assert.AreEqual(58, gz.Index);
@@ -53,7 +54,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void FalseGZTest()
+        public void 错误干支Test()
         {
             try
             {
@@ -100,7 +101,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void  ShiShenTest()
+        public void  十神Test()
         {
             Assert.AreEqual("枭", 十神.Calc10(丙, 甲, shortname: true));
             Assert.AreEqual("印", 十神.Calc10(丙, 乙, shortname: true));
@@ -141,7 +142,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void OperatorTest()
+        public void 操作符Test()
         {
             GanZhi gz1 = new GanZhi("壬戌");
             GanZhi gz2 = new GanZhi(58);
@@ -155,7 +156,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void EmptyTest()
+        public void 空值Test()
         {
             Gan zeroG = Gan.Zero;
             Assert.AreEqual(-1, zeroG.Index);
@@ -184,7 +185,7 @@ namespace HuaheBaseUnitTest
         }
 
         [TestMethod]
-        public void AddNumTest()
+        public void Add函数Test()
         {
             GanZhi wuwu = new GanZhi("戊午");
             GanZhi genshen = wuwu.Add(2);
@@ -198,6 +199,23 @@ namespace HuaheBaseUnitTest
 
             GanZhi wuwu1 = wuwu.Add(180);
             Assert.AreEqual(wuwu, wuwu1);
+        }
+
+        [TestMethod]
+        public void 藏干Test()
+        {
+            Assert.AreEqual("癸", string.Join("", 子.藏干.Select(g => g.Name)));
+            Assert.AreEqual("癸辛己", string.Join("", 丑.藏干.Select(g => g.Name)));
+            Assert.AreEqual("甲丙己", string.Join("", 寅.藏干.Select(g => g.Name)));
+            Assert.AreEqual("乙", string.Join("", 卯.藏干.Select(g => g.Name)));
+            Assert.AreEqual("乙戊癸", string.Join("", 辰.藏干.Select(g => g.Name)));
+            Assert.AreEqual("丙戊庚", string.Join("", 巳.藏干.Select(g => g.Name)));
+            Assert.AreEqual("丁", string.Join("", 午.藏干.Select(g => g.Name)));
+            Assert.AreEqual("乙丁己", string.Join("", 未.藏干.Select(g => g.Name)));
+            Assert.AreEqual("己庚壬", string.Join("", 申.藏干.Select(g => g.Name)));
+            Assert.AreEqual("辛", string.Join("", 酉.藏干.Select(g => g.Name)));
+            Assert.AreEqual("丁戊辛", string.Join("", 戌.藏干.Select(g => g.Name)));
+            Assert.AreEqual("甲戊壬", string.Join("", 亥.藏干.Select(g => g.Name)));
         }
     }
 }

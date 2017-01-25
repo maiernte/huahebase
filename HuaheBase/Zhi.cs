@@ -16,16 +16,16 @@ namespace HuaheBase
         private static int[][] cangans = new int[][] {
             new int[] { 9 },
             new int[] {9, 7, 5},
-            new int[] {0, 2, 4},
+            new int[] {0, 2, 5},
             new int[] {1},
             new int[] {1, 4, 9},
             new int[] {2, 4, 6},
-            new int[] {3, 5},
+            new int[] {3},
             new int[] {1, 3, 5},
-            new int[] {4, 6, 8},
+            new int[] {5, 6, 8},
             new int[] {7},
             new int[] {3, 4, 7},
-            new int[] {0, 8}
+            new int[] {0, 4, 8}
         };
         // "子"0, "丑"1, "寅"2, "卯"3, "辰"4, "巳"5, "午"6, "未"7, "申"8, "酉"9, "戌"10, "亥"11
         private static int[] he = new int[]{ 1, 0, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
