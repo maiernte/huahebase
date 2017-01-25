@@ -141,13 +141,26 @@ namespace HuaheBase
 
         public static bool operator == (GanZhi a, GanZhi b)
         {
-
-            return a.Equals(b);
+            if(a is GanZhi)
+            {
+                return a.Equals(b);
+            }
+            else
+            {
+                return b is GanZhi ? false : true;
+            }
         }
 
         public static bool operator !=(GanZhi a, GanZhi b)
         {
-            return !a.Equals(b);
+            if (a is GanZhi)
+            {
+                return !a.Equals(b);
+            }
+            else
+            {
+                return b is GanZhi ? true : false;
+            }
         }
 
         public GanZhi Add(int num)

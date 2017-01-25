@@ -106,7 +106,7 @@ namespace HuaheBase
             // 看年月是否匹配
             GanZhi n = new GanZhi(year);
             GanZhi m = new GanZhi(month);
-            if(n.Gan.起月时(m.Zhi, forYue:true) != m)
+            if(n.Gan.起月时(m.Zhi, 柱位.月) != m)
             {
                 throw new ArgumentException($"'{year}'年不存在'{month}'月。");
             }

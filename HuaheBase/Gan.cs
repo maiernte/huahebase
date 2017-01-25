@@ -126,24 +126,9 @@ namespace HuaheBase
             }
         }
 
-        public Gan 起月干
-        {
-            get
-            {
-                var start = (this.Index % 5) * 2;
-                start = (start + 2) % 10;
-                return Gan.Get(start);
-            }
-        }
+        public Gan 起月干 => this.起月时(Zhi.Get("寅"), 柱位.月).Gan;
 
-        public Gan 起时干
-        {
-            get
-            {
-                var start = (this.Index % 5) * 2;
-                return Gan.Get(start);
-            }
-        }
+        public Gan 起时干 => this.起月时(Zhi.Get("子"), 柱位.时).Gan;
 
         public Zhi 长生
         {
@@ -162,13 +147,13 @@ namespace HuaheBase
             }
         }
 
-        public GanZhi 起月时(Zhi zhi, bool forYue)
+        public GanZhi 起月时(Zhi zhi, 柱位 location)
         {
             //var start = (this.Index % 5) * 2;
             //var g = (start + zhi.Index + 10) % 10;
             //return new GanZhi(g, zhi.Index);
 
-            if (forYue)
+            if (location == 柱位.月)
             {
                 var start = (this.Index % 5) * 2;
                 start = (start + 2) % 10;

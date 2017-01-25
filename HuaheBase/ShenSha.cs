@@ -47,7 +47,7 @@ namespace HuaheBase
             ShenShaBase.instances.Add(new ShenShaBase() { Name = "贵人", CalcSpec = ShenShaBase.贵人 });
             ShenShaBase.instances.Add(new ShenShaBase() { Name = "天医", CalcSpec = ShenShaBase.天医 });
             ShenShaBase.instances.Add(new ShenShaBase() { Name = "旬空", CalcSpec = ShenShaBase.旬空 });
-            ShenShaBase.instances.Add(new ShenShaBase() { Name = "魁罡", CalcSpec = ShenShaBase.魁罡 });
+            // ShenShaBase.instances.Add(new ShenShaBase() { Name = "魁罡", CalcSpec = ShenShaBase.魁罡 });
         }
 
         private ShenShaBase()
@@ -92,19 +92,6 @@ namespace HuaheBase
             return new string[] { Zhi.Get(index).Name, Zhi.Get(index + 1).Name };
         }
 
-        internal static string[] 魁罡(GanZhi gz)
-        {
-            string[] pattern = new string[] { "庚戌", "庚辰", "戊戌", "壬辰" };
-            if(pattern.Any(s => s == gz.Name))
-            {
-                return new string[0];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         internal string[] Calc(GanZhi gz)
         {
             if(this.CalcSpec == null)
@@ -142,20 +129,24 @@ namespace HuaheBase
         /// 2. 对于布尔值类型，空数组代表“有”， Null代表“没有”
         /// </summary>
         /// <returns></returns>
-        public string[] Calc()
+        public string[] Calc(GanZhi shiyun = null)
         {
-            if(!this.ssBase.HasCalcFunc)
+            GanZhi[] gzs = shiyun == null ? this.GZ : new GanZhi[] { shiyun };
+
+            if (!this.ssBase.HasCalcFunc)
             {
                 switch(this.Name)
                 {
                     case "四废":
-                        return this.四废();
+                        return this.四废(gzs);
                     case "孤辰寡宿":
-                        return 孤辰寡宿();
+                        return this.孤辰寡宿(gzs);
                     case "阴差阳错":
-                        return 阴差阳错();
+                        return ShenSha.阴差阳错(gzs);
                     case "天罗地网":
-                        return 天罗地网();
+                        return this.天罗地网(shiyun);
+                    case "魁罡":
+                        return ShenSha.魁罡(gzs);
                 }
 
                 return null;
@@ -163,17 +154,10 @@ namespace HuaheBase
             else
             {
                 List<string> res = new List<string>();
-                foreach (var gz in this.GZ)
+                foreach (var gz in gzs)
                 {
                     var tmp = this.ssBase.Calc(gz);
-                    if (tmp is string[])
-                    {
-                        res.AddRange(tmp);
-                    }
-                    else
-                    {
-                        return tmp;
-                    }
+                    res.AddRange(tmp);
                 }
 
                 return res.Distinct().ToArray();
@@ -185,7 +169,7 @@ namespace HuaheBase
         /// 春庚申，辛酉，夏壬子，癸亥，秋甲寅，乙卯，冬丙午，丁巳
         /// </summary>
         /// <returns></returns>
-        private string[] 四废()
+        private string[] 四废(GanZhi[] gzs)
         {
             string[] pattern = new string[0];
             switch (this.Bazi.月.Zhi.Index)
@@ -208,7 +192,7 @@ namespace HuaheBase
                     break;
             }
 
-            var res = this.GZ.Select(gz => pattern.Any(p => p == gz.Name) ? true : false);
+            var res = gzs.Select(gz => pattern.Any(p => p == gz.Name) ? true : false);
             return res.Any(b => b) ? new string[0] : null;
         }
 
@@ -219,7 +203,7 @@ namespace HuaheBase
         /// 申酉戌年生人，柱中见亥为孤见未为寡
         /// </summary>
         /// <returns></returns>
-        private string[] 孤辰寡宿()
+        private string[] 孤辰寡宿(GanZhi[] gzs)
         {
             int[] pattern = new int[0];
             int idx = ShenShaBase.三会局(this.Bazi.年);
@@ -239,14 +223,14 @@ namespace HuaheBase
                     break;
             }
 
-            var res = this.GZ.Select(gz => pattern.Any(p => p == gz.Zhi.Index) ? true : false);
+            var res = gzs.Select(gz => pattern.Any(p => p == gz.Zhi.Index) ? true : false);
             return res.Any(b => b) ? new string[0] : null;
         }
 
-        private string[] 阴差阳错()
+        private static string[] 阴差阳错(GanZhi[] gzs)
         {
             string[] pattern = new string[] { "丙子", "丙午", "丁丑", "丁未", "辛卯", "辛酉", "壬辰", "壬戌", "癸巳", "癸亥", "戊寅", "戊申" };
-            var res = this.GZ.Select(gz => pattern.Any(p => p == gz.Name) ? true : false);
+            var res = gzs.Select(gz => pattern.Any(p => p == gz.Name) ? true : false);
             return res.Any(b => b) ? new string[0] : null;
         }
 
@@ -255,7 +239,7 @@ namespace HuaheBase
         /// 男命柱中辰、巳并见，谓之天罗；女命柱中戌、亥并见，谓之地网
         /// </summary>
         /// <returns></returns>
-        private string[] 天罗地网()
+        private string[] 天罗地网(GanZhi shiyun)
         {
             if(this.性别 == 性别.无)
             {
@@ -265,7 +249,34 @@ namespace HuaheBase
             string[] pattern = this.性别 == 性别.男 ? new string[] { "辰", "巳" } : new string[] { "戌", "亥" };
             var res = this.GZ.Select(gz => pattern.Any(p => p == gz.Zhi.Name) ? gz.Zhi.Name : string.Empty);
             res = res.Distinct();
-            return res.Count(b => b != string.Empty) >= 2 ? new string[0] : null;
+            bool hasTianLuoDiWang = res.Count(b => b != string.Empty) >= 2;
+
+            if(shiyun != null)
+            {
+                bool 是否符合流年 = pattern.Contains(shiyun.Zhi.Name);
+                if (hasTianLuoDiWang)
+                {
+                    // 原局有天罗地网，流年要再碰到
+                    return 是否符合流年 ? new string[0] : null;
+                }
+                else
+                {
+                    res = res.Concat(是否符合流年 ? new string[] { shiyun.Zhi.Name } : new string[0]);
+                    res = res.Distinct();
+                    return res.Count(b => b != string.Empty) >= 2 ? new string[0] : null;
+                }
+            }
+            else
+            {
+                return hasTianLuoDiWang ? new string[0] : null;
+            }
+        }
+
+        private static string[] 魁罡(GanZhi[] gzs)
+        {
+            string[] pattern = new string[] { "庚戌", "庚辰", "戊戌", "壬辰" };
+            var res = gzs.Select(gz => pattern.Any(p => p == gz.Name) ? true : false);
+            return res.Any(b => b) ? new string[0] : null;
         }
     }
 }

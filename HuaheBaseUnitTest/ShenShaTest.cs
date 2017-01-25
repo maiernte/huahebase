@@ -54,6 +54,8 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("酉", string.Join(",", 金局.Calc()));
             Assert.AreEqual("子", string.Join(",", 水局.Calc()));
             Assert.AreEqual("午", string.Join(",", 火局.Calc()));
+
+            Assert.AreEqual("子", string.Join(",", 火局.Calc(new GanZhi("甲申"))));
         }
 
         [TestMethod]
@@ -363,6 +365,8 @@ namespace HuaheBaseUnitTest
 
             ShenSha ss甲子 = new ShenSha(name, new GanZhi[] { new GanZhi("甲子") });
             Assert.IsNull(ss甲子.Calc());
+
+            Assert.IsNotNull(ss甲子.Calc(new GanZhi("庚戌")));
         }
 
         [TestMethod]
@@ -459,6 +463,10 @@ namespace HuaheBaseUnitTest
             ss.性别 = 性别.男;
             Assert.IsNull(ss.Calc());
 
+            // 原局没有，流年有
+            Assert.IsNotNull(ss.Calc(new GanZhi("丁巳")));
+            Assert.IsNull(ss.Calc(new GanZhi("丁亥")));
+
             ShenSha ss1 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
             ss1.性别 = 性别.男;
             Assert.AreEqual(string.Empty, string.Join("", ss1.Calc()));
@@ -471,12 +479,17 @@ namespace HuaheBaseUnitTest
             ss3.性别 = 性别.女;
             Assert.AreEqual(string.Empty, string.Join("", ss3.Calc()));
 
+            // 原局已经有，要再次碰到戌亥流年才会显示。
+            Assert.IsNull(ss3.Calc(new GanZhi("丁丑")));
+            Assert.IsNotNull(ss3.Calc(new GanZhi("丁亥")));
+
             ShenSha ss4 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
             ss4.性别 = 性别.女;
             Assert.IsNull(ss4.Calc());
 
             try
             {
+                // 没有指定性别，会导致错误。
                 ShenSha ss5 = new ShenSha(name, new GanZhi[] { new GanZhi("庚辰"), new GanZhi("壬子"), new GanZhi("乙巳") });
                 var res = ss5.Calc();
                 Assert.IsTrue(false);
