@@ -16,10 +16,13 @@ namespace HuaheBase
     public class Ming
     {
         private BaZiList<GanZhi> bazi;
+        private IEnumerable<ShiYun> dayuns;
+        private DateTime? birthday = null;
 
         public Ming(DateTime date, 性别 gender, bool sureTime = true)
         {
             this.性别 = gender;
+            this.birthday = date;
 
             LnDate lndate = new LnDate(date);
             GanZhi year = new GanZhi(lndate.YearGZ);
@@ -43,7 +46,48 @@ namespace HuaheBase
             this.InitData();
         }
 
+        public Ming(string 年, string 月, string 日, string 时, 性别 gender)
+        {
+            this.性别 = gender;
+            GanZhi year = new GanZhi(年);
+            GanZhi month = new GanZhi(月);
+            GanZhi day = new GanZhi(日);
+            GanZhi shi = new GanZhi(时);
+
+            if(year == GanZhi.Zero || month == GanZhi.Zero || day == GanZhi.Zero)
+            {
+                throw new ArgumentException($"『{年}/{月}/{日}/{时}』是一个无效八字。");
+            }
+
+            if (year.Gan.起月时(month.Zhi, 柱位.月) != month)
+            {
+                throw new ArgumentException($"'{year}'年不存在'{month}'月。");
+            }
+
+            if(shi != GanZhi.Zero)
+            {
+                if (day.Gan.起月时(shi.Zhi, 柱位.时) != shi)
+                {
+                    throw new ArgumentException($"'{日}'日不存在'{时}'时。");
+                }
+            }
+
+            this.bazi = new BaZiList<GanZhi>(year, month, day, shi);
+            this.InitData();
+        }
+
         public 性别 性别 { get; private set; }
+
+        // 阳男阴女顺行
+        public 方向 方向
+        {
+            get
+            {
+                // 阳男阴女顺行
+                var direction = (this.性别 == 性别.男 ? 1 : -1) * (this.四柱.年.Zhi.Index % 2 == 0 ? 1 : -1);
+                return direction == 1 ? 方向.顺行 : 方向.逆行;
+            }
+        }
 
         public BaZiList<ShiYun> 四柱 { get; private set; }
 
@@ -56,6 +100,14 @@ namespace HuaheBase
         public bool ShortText { get; set; } = false;
 
         public IEnumerable<Tuple<string, int>> 统计五行 { get; private set; }
+
+        public IEnumerable<ShiYun> 大运
+        {
+            get
+            {
+                return this.dayuns ?? (this.dayuns = this.起大运(this.birthday));
+            }
+        }
 
         private void InitData()
         {
@@ -157,25 +209,30 @@ namespace HuaheBase
             return sum.Select((num, idx) => new Tuple<string, int>(BaseDef.WuXings[idx], num));
         }
 
-        private ShiYun[] 起大运(DateTime birthday, 性别 gender)
+        private IEnumerable<ShiYun> 起大运(DateTime? birthday)
         {
+            DateTime? dayunTime = birthday != null ? LnBase.起运时间((DateTime)birthday, this.方向) : (DateTime?)null;
+            List<ShiYun> dayuns = new List<ShiYun>();
 
-            return null;
-        }
+            ShiYun dyVor = new ShiYun(this.四柱.月.Add(0), ShiYun.YunType.大运, this.bazi);
+            dyVor.Start = birthday;
+            dyVor.End = dayunTime;
+            dayuns.Add(dyVor);
 
-        private DateTime 起运时间(DateTime birthday)
-        {
-            // 阳男阴女顺行
-            var direction = (this.性别 == 性别.男 ? 1 : -1) * (this.四柱.年.Zhi.Index % 2 == 0 ? 1 : -1);
+            int f = this.方向 == 方向.顺行 ? 1 : -1;
+            for (int i = 1; i <= 10; i++)
+            {
+                ShiYun dy = new ShiYun(this.四柱.月.Add(f * i), ShiYun.YunType.大运, this.bazi);
+                if(dayunTime != null)
+                {
+                    dy.Start = ((DateTime)dayunTime).AddYears(10 * (i - 1));
+                    dy.End = ((DateTime)dayunTime).AddYears(10 * i);
+                }
+                
+                dayuns.Add(dy);
+            }
 
-            //var jieqi = TYLunar.findNextJieQi(this.Birthday, direction);
-
-            //var timespan = Math.abs(jieqi.getTime() - this.Birthday.getTime());
-            //var hoursOff = (timespan / (1000 * 60)) * 2;
-            //var dayunTime = new Date(this.Birthday.getTime() + hoursOff * (1000 * 60 * 60));
-
-            //return dayunTime;
-            return DateTime.Now;
+            return dayuns;
         }
     }
 }

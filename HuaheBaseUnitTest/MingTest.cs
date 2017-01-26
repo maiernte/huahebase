@@ -10,7 +10,7 @@ namespace HuaheBaseUnitTest
     public class MingTest
     {
         [TestMethod]
-        public void ConstrucktorTest()
+        public void 构造函数Test()
         {
             DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);
             Ming ming = new Ming(day, 性别.男);
@@ -42,6 +42,9 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("壬寅", mingLiChun.四柱.月.Name);
             Assert.AreEqual("壬戌", mingLiChun.四柱.日.Name);
             Assert.AreEqual("庚子", mingLiChun.四柱.时.Name);
+
+            Ming bazi = new Ming("戊午", "戊午", "甲子", "丁卯", 性别.男);
+            Assert.IsNotNull(bazi);
         }
 
         [TestMethod]
@@ -167,6 +170,44 @@ namespace HuaheBaseUnitTest
 
             var last = ming2.神煞.ElementAt(18);
             Assert.IsNull(last.Calc());
+        }
+
+        [TestMethod]
+        public void 大运Test()
+        {
+            DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);
+            Ming ming = new Ming(day, 性别.男);
+            Assert.AreEqual(11, ming.大运.Count());
+
+            Assert.AreEqual("戊午", ming.大运.ElementAt(0).Name);
+            Assert.AreEqual("己未", ming.大运.ElementAt(1).Name);
+            Assert.AreEqual("庚申", ming.大运.ElementAt(2).Name);
+            Assert.AreEqual("辛酉", ming.大运.ElementAt(3).Name);
+            Assert.AreEqual("壬戌", ming.大运.ElementAt(4).Name);
+            
+
+            Assert.AreEqual(1980, ((DateTime)ming.大运.ElementAt(1).Start).Year);
+            Assert.AreEqual("偏财", ming.大运.ElementAt(1).干十神);
+            Assert.AreEqual("七杀", ming.大运.ElementAt(2).支十神);
+            Assert.AreEqual("枭神", ming.大运.ElementAt(4).干十神);
+
+            Ming bazi = new Ming("戊午", "戊午", "甲子", "丁卯", 性别.男);
+            Assert.IsNotNull(bazi.大运);
+            Assert.AreEqual(ming.大运.ElementAt(1).Name, bazi.大运.ElementAt(1).Name);
+            Assert.AreEqual(ming.大运.ElementAt(2).Name, bazi.大运.ElementAt(2).Name);
+            Assert.AreEqual(ming.大运.ElementAt(3).Name, bazi.大运.ElementAt(3).Name);
+        }
+
+        [TestMethod]
+        public void 流年Test()
+        {
+            DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);
+            Ming ming = new Ming(day, 性别.男);
+            Assert.IsNull(ming.四柱.年.流年);
+            Assert.IsNull(ming.四柱.年.小运);
+            Assert.AreEqual(11, ming.大运.Count());
+
+
         }
     }
 }

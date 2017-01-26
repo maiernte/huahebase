@@ -6,7 +6,7 @@ namespace HuaheBase
 {
     public class LnDate
     {
-        private static Lunar lunar;
+        internal static Lunar lunar;
 
         internal DateTime datetime;
 
@@ -86,6 +86,8 @@ namespace HuaheBase
 
         public TimeSpan JieQiTime { get; private set; }
 
+        public bool 换月 { get; private set; } = false;
+
         public LnDate Add(int num)
         {
             DateTime newday = this.datetime.AddDays(num);
@@ -123,16 +125,21 @@ namespace HuaheBase
                 this.YearGZ = yesterday.Lyear2;
             }
 
+            // 每个月1号的话，肯定不会换月，不用考虑。
+            // 超过1号理论上有换月的可能，因此需要注意。
             if(this.datetime.Day > 1)
             {
                 OB yesterday = LnDate.lunar.lun.FirstOrDefault(o => o.d == this.datetime.Day - 1);
-                TimeSpan ts = !string.IsNullOrEmpty(yesterday.jqsj) ? TimeSpan.Parse(yesterday.jqsj) : TimeSpan.Zero;
-                if(ts.Hours == 23)
+                TimeSpan tsYesterday = !string.IsNullOrEmpty(yesterday.jqsj) ? TimeSpan.Parse(yesterday.jqsj) : TimeSpan.Zero;
+                if(tsYesterday.Hours == 23)
                 {
-                    this.JieQiTime = ts - new TimeSpan(23, 59, 59);
+                    this.JieQiTime = tsYesterday - new TimeSpan(23, 59, 59);
                     this.JieQi = yesterday.jqmc;
                 }
             }
+
+            int firstJieQiDay = LnDate.lunar.lun.FirstOrDefault(o => !string.IsNullOrEmpty(o.jqmc)).d;
+            this.换月 = Math.Abs(this.Day - firstJieQiDay) <= 1 && this.JieQiTime != TimeSpan.Zero;
         }
     }
 }
