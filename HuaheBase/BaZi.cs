@@ -5,11 +5,6 @@
     /// </summary>
     public class BaZiList<T>: System.Collections.Generic.List<T>
     {
-        //public BaZiList(string nian, string yue, string ri, string shi)
-        //    : this(new GanZhi(nian), new GanZhi(yue), new GanZhi(ri), string.IsNullOrEmpty(shi) ? GanZhi.Zero : new GanZhi(shi))
-        //{
-        //}
-
         public BaZiList(T nian, T yue, T ri, T shi)
         {
             this.Add(nian);

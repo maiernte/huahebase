@@ -21,6 +21,9 @@ namespace HuaheBase
             this.Base = bz;
         }
 
+        internal Func<DateTime, DateTime, IEnumerable<ShiYun>> 起小运;
+        internal Func<DateTime, DateTime, IEnumerable<ShiYun>> 起流年;
+
         public YunType Type { get; private set; }
 
         public BaZiList<GanZhi> Base { get; private set; }
@@ -57,12 +60,12 @@ namespace HuaheBase
         {
             get
             {
-                if(this.Type != YunType.大运 || this.Start == null)
+                if(this.Type != YunType.大运 || this.Start == null || this.起流年 == null)
                 {
                     return null;
                 }
 
-                return this.liunian ?? (this.liunian = ShiYun.起流年((DateTime)this.Start));
+                return this.liunian ?? (this.liunian = this.起流年((DateTime)this.Start, (DateTime)this.End));
             }
         }
 
@@ -70,44 +73,37 @@ namespace HuaheBase
         {
             get
             {
-                if (this.Type != YunType.大运 || this.Start == null)
+                if (this.Type != YunType.大运 || this.Start == null || this.起小运 == null)
                 {
                     return null;
                 }
 
-                return this.xiaoyun ?? (this.xiaoyun = ShiYun.起小运((DateTime)this.Start));
+                return this.xiaoyun ?? (this.xiaoyun = this.起小运((DateTime)this.Start, (DateTime)this.End));
             }
         }
 
-        private static IEnumerable<ShiYun> 起流年(DateTime start, DateTime end, BaZiList<GanZhi> bazi)
-        {
-            List<ShiYun> res = new List<ShiYun>();
-            for (int i = 0; i <= 10; i++)
-            {
-                LnDate d = new LnDate(start.AddYears(i));
-                ShiYun ln = new ShiYun(new GanZhi(d.YearGZ), YunType.流年, bazi);
+        //private static IEnumerable<ShiYun> 起流年(DateTime start, DateTime end, BaZiList<GanZhi> bazi)
+        //{
+        //    List<ShiYun> res = new List<ShiYun>();
+        //    for (int i = 0; i <= 10; i++)
+        //    {
+        //        LnDate d = new LnDate(start.AddYears(i));
+        //        ShiYun ln = new ShiYun(new GanZhi(d.YearGZ), YunType.流年, bazi);
 
-                LnDate 立春 = LnBase.查找节气(start.AddYears(i).Year, 2);
-                ln.Start = 立春.datetime + 立春.JieQiTime;
-                ln.End = ((DateTime)ln.Start).AddYears(1);
+        //        LnDate 立春 = LnBase.查找节气(start.AddYears(i).Year, 2);
+        //        ln.Start = 立春.datetime + 立春.JieQiTime;
+        //        ln.End = ((DateTime)ln.Start).AddYears(1);
 
-                res.Add(ln);
+        //        res.Add(ln);
 
-                // 超过时限，退出。主要是为起运前的流年考虑的。其它都是十年期。
-                if(((DateTime)ln.End).Year > end.Year)
-                {
-                    break;
-                }
-            }
+        //        // 超过时限，退出。主要是为起运前的流年考虑的。其它都是十年期。
+        //        if(((DateTime)ln.End).Year > end.Year)
+        //        {
+        //            break;
+        //        }
+        //    }
 
-            return res;
-        }
-
-        private static IEnumerable<ShiYun> 起小运(DateTime start)
-        {
-            List<ShiYun> res = new List<ShiYun>();
-
-            return res;
-        }
+        //    return res;
+        //}
     }
 }

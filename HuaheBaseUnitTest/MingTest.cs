@@ -196,6 +196,10 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual(ming.大运.ElementAt(1).Name, bazi.大运.ElementAt(1).Name);
             Assert.AreEqual(ming.大运.ElementAt(2).Name, bazi.大运.ElementAt(2).Name);
             Assert.AreEqual(ming.大运.ElementAt(3).Name, bazi.大运.ElementAt(3).Name);
+
+            Assert.IsNull(bazi.大运.ElementAt(0).流年);
+            Assert.IsNull(bazi.大运.ElementAt(1).小运);
+            Assert.IsFalse(bazi.Has流年);
         }
 
         [TestMethod]
@@ -206,8 +210,26 @@ namespace HuaheBaseUnitTest
             Assert.IsNull(ming.四柱.年.流年);
             Assert.IsNull(ming.四柱.年.小运);
             Assert.AreEqual(11, ming.大运.Count());
+            Assert.IsTrue(ming.Has流年);
 
+            ShiYun 起运前 = ming.大运.First();
+            Assert.AreEqual(3, 起运前.流年.Count());
+            Assert.AreEqual("戊午", 起运前.流年.ElementAt(0).Name);
+            Assert.AreEqual("己未", 起运前.流年.ElementAt(1).Name);
+            Assert.AreEqual("庚申", 起运前.流年.ElementAt(2).Name);
 
+            Assert.AreEqual("戊辰", 起运前.小运.ElementAt(0).Name);
+            Assert.AreEqual("己巳", 起运前.小运.ElementAt(1).Name);
+            Assert.AreEqual("庚午", 起运前.小运.ElementAt(2).Name);
+
+            Ming 女命 = new Ming(day, 性别.女);
+            起运前 = 女命.大运.First();
+            Assert.AreEqual("丙寅", 起运前.小运.ElementAt(0).Name);
+            Assert.AreEqual("乙丑", 起运前.小运.ElementAt(1).Name);
+            Assert.AreEqual("甲子", 起运前.小运.ElementAt(2).Name);
+
+            Assert.AreEqual("丙辰", 女命.大运.ElementAt(2).Name);
+            Assert.AreEqual("乙卯", 女命.大运.ElementAt(3).Name);
         }
     }
 }

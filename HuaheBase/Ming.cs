@@ -109,6 +109,14 @@ namespace HuaheBase
             }
         }
 
+        public bool Has流年
+        {
+            get
+            {
+                return this.birthday != null;
+            }
+        }
+
         private void InitData()
         {
             List<ShiYun> tmp = new List<ShiYun>();
@@ -217,6 +225,8 @@ namespace HuaheBase
             ShiYun dyVor = new ShiYun(this.四柱.月.Add(0), ShiYun.YunType.大运, this.bazi);
             dyVor.Start = birthday;
             dyVor.End = dayunTime;
+            dyVor.起小运 += this.起小运;
+            dyVor.起流年 += this.起流年;
             dayuns.Add(dyVor);
 
             int f = this.方向 == 方向.顺行 ? 1 : -1;
@@ -227,12 +237,56 @@ namespace HuaheBase
                 {
                     dy.Start = ((DateTime)dayunTime).AddYears(10 * (i - 1));
                     dy.End = ((DateTime)dayunTime).AddYears(10 * i);
+                    dy.起小运 += this.起小运;
+                    dy.起流年 += this.起流年;
                 }
                 
                 dayuns.Add(dy);
             }
 
             return dayuns;
+        }
+
+        private IEnumerable<ShiYun> 起流年(DateTime start, DateTime end)
+        {
+            List<ShiYun> res = new List<ShiYun>();
+            for (int i = 0; i <= 10; i++)
+            {
+                LnDate d = new LnDate(start.AddYears(i));
+                ShiYun ln = new ShiYun(new GanZhi(d.YearGZ), ShiYun.YunType.流年, this.bazi);
+
+                LnDate 立春 = LnBase.查找节气(start.AddYears(i).Year, 2);
+                ln.Start = 立春.datetime + 立春.JieQiTime;
+                ln.End = ((DateTime)ln.Start).AddYears(1);
+
+                res.Add(ln);
+
+                // 超过时限，退出。主要是为起运前的流年考虑的。其它都是十年期。
+                if (((DateTime)ln.End).Year > end.Year)
+                {
+                    break;
+                }
+            }
+
+            return res;
+        }
+
+        private IEnumerable<ShiYun> 起小运(DateTime start, DateTime end)
+        {
+            List<ShiYun> res = new List<ShiYun>();
+            for (int year = start.Year; year <= end.Year; year++)
+            {
+                int diff = year - ((DateTime)this.birthday).Year + 1;
+                int f = this.方向 == 方向.顺行 ? 1 : -1;
+
+                GanZhi gz = this.bazi.时.Add(f * diff);
+                ShiYun xiaoyun = new ShiYun(gz, ShiYun.YunType.小运, this.bazi);
+                xiaoyun.Start = new DateTime(year, ((DateTime)this.birthday).Month, ((DateTime)this.birthday).Day);
+                xiaoyun.End = new DateTime(year + 1, ((DateTime)this.birthday).Month, ((DateTime)this.birthday).Day);
+                res.Add(xiaoyun);
+            }
+
+            return res;
         }
     }
 }
