@@ -13,7 +13,7 @@ namespace HuaheBase
     /// <summary>
     /// 命盘，包含所有的时运、神煞
     /// </summary>
-    public class Ming
+    public class Ming : IDisposable
     {
         private BaZiList<GanZhi> bazi;
         private IEnumerable<ShiYun> dayuns;
@@ -115,6 +115,29 @@ namespace HuaheBase
             {
                 return this.birthday != null;
             }
+        }
+
+        public void Dispose()
+        {
+            foreach(var dy in this.大运)
+            {
+                if(dy.起流年 != null)
+                {
+                    dy.起流年 -= this.起流年;
+                }
+
+                if (dy.起小运 != null)
+                {
+                    dy.起小运 -= this.起小运;
+                }
+
+                dy.Dispose();
+            }
+
+            this.dayuns = new List<ShiYun>();
+            this.神煞 = new List<ShenSha>();
+            this.bazi.Clear();
+            this.四柱.Clear();
         }
 
         private void InitData()

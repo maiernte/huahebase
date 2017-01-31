@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ToDoList.txt = ToDoList.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuaheData", "HuaheData\HuaheData.csproj", "{52ED444E-8215-4023-8CEE-C3F7E4D71698}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{03AFA884-EF9B-4739-A9DC-6BCF0D373CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03AFA884-EF9B-4739-A9DC-6BCF0D373CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03AFA884-EF9B-4739-A9DC-6BCF0D373CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52ED444E-8215-4023-8CEE-C3F7E4D71698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52ED444E-8215-4023-8CEE-C3F7E4D71698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52ED444E-8215-4023-8CEE-C3F7E4D71698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52ED444E-8215-4023-8CEE-C3F7E4D71698}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

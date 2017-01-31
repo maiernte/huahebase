@@ -222,6 +222,8 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("己巳", 起运前.小运.ElementAt(1).Name);
             Assert.AreEqual("庚午", 起运前.小运.ElementAt(2).Name);
 
+            ming.Dispose();
+
             Ming 女命 = new Ming(day, 性别.女);
             起运前 = 女命.大运.First();
             Assert.AreEqual("丙寅", 起运前.小运.ElementAt(0).Name);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HuaheBase
 {
-    public class ShiYun : GanZhi
+    public class ShiYun : GanZhi, IDisposable
     {
         public enum YunType { 命局, 大运, 流年, 小运}
 
@@ -82,28 +82,19 @@ namespace HuaheBase
             }
         }
 
-        //private static IEnumerable<ShiYun> 起流年(DateTime start, DateTime end, BaZiList<GanZhi> bazi)
-        //{
-        //    List<ShiYun> res = new List<ShiYun>();
-        //    for (int i = 0; i <= 10; i++)
-        //    {
-        //        LnDate d = new LnDate(start.AddYears(i));
-        //        ShiYun ln = new ShiYun(new GanZhi(d.YearGZ), YunType.流年, bazi);
+        public void Dispose()
+        {
+            if(this.xiaoyun != null)
+            {
+                this.xiaoyun = new List<ShiYun>();
+            }
 
-        //        LnDate 立春 = LnBase.查找节气(start.AddYears(i).Year, 2);
-        //        ln.Start = 立春.datetime + 立春.JieQiTime;
-        //        ln.End = ((DateTime)ln.Start).AddYears(1);
+            if (this.liunian != null)
+            {
+                this.liunian = new List<ShiYun>();
+            }
 
-        //        res.Add(ln);
-
-        //        // 超过时限，退出。主要是为起运前的流年考虑的。其它都是十年期。
-        //        if(((DateTime)ln.End).Year > end.Year)
-        //        {
-        //            break;
-        //        }
-        //    }
-
-        //    return res;
-        //}
+            this.Base = null;
+        }
     }
 }
