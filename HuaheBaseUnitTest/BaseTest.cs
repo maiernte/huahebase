@@ -260,7 +260,7 @@ namespace HuaheBaseUnitTest
             var res2 = new Gan[] { 癸, 己, 辛 };
             Assert.IsTrue(this.CheckGanList(res2, 丑.藏干));
 
-            var res3 = new Gan[] { 戊, 丙, 甲 };
+            var res3 = new Gan[] { 己, 丙, 甲 };
             Assert.IsTrue(this.CheckGanList(res3, 寅.藏干));
 
             var res4 = new Gan[] { 乙 };
@@ -272,13 +272,13 @@ namespace HuaheBaseUnitTest
             var res6 = new Gan[] { 丙, 戊, 庚 };
             Assert.IsTrue(this.CheckGanList(res6, 巳.藏干));
 
-            var res7 = new Gan[] { 丁, 己 };
+            var res7 = new Gan[] { 丁 };
             Assert.IsTrue(this.CheckGanList(res7, 午.藏干));
 
             var res8 = new Gan[] { 丁, 己, 乙 };
             Assert.IsTrue(this.CheckGanList(res8, 未.藏干));
 
-            var res9 = new Gan[] { 壬, 庚, 戊 };
+            var res9 = new Gan[] { 壬, 庚, 己 };
             Assert.IsTrue(this.CheckGanList(res9, 申.藏干));
 
             var res10 = new Gan[] { 辛 };
@@ -287,7 +287,7 @@ namespace HuaheBaseUnitTest
             var res11 = new Gan[] { 戊, 辛, 丁 };
             Assert.IsTrue(this.CheckGanList(res11, 戌.藏干));
 
-            var res12 = new Gan[] { 壬, 甲 };
+            var res12 = new Gan[] { 壬, 甲 , 戊};
             Assert.IsTrue(this.CheckGanList(res12, 亥.藏干));
         }
 

@@ -43,9 +43,11 @@
     <Compile Include="City.cs" />
     <Compile Include="Gan.cs" />
     <Compile Include="GanZhi.cs" />
+    <Compile Include="Gua.cs" />
     <Compile Include="Gua64.cs" />
     <Compile Include="Gua8.cs" />
     <Compile Include="HHExtentions.cs" />
+    <Compile Include="HHTime.cs" />
     <Compile Include="JianChu.cs" />
     <Compile Include="Land.cs" />
     <Compile Include="LnBase.cs" />

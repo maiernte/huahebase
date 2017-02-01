@@ -149,10 +149,6 @@ namespace HuaheBase
 
         public GanZhi 起月时(Zhi zhi, 柱位 location)
         {
-            //var start = (this.Index % 5) * 2;
-            //var g = (start + zhi.Index + 10) % 10;
-            //return new GanZhi(g, zhi.Index);
-
             if (location == 柱位.月)
             {
                 var start = (this.Index % 5) * 2;

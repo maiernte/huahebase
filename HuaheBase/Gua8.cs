@@ -35,6 +35,14 @@ namespace HuaheBase
             }
         }
 
+        public static string[] FullNames
+        {
+            get
+            {
+                return Gua8.Instances.Select(g => g.FullName).ToArray();
+            }
+        }
+
         public string Name2 { get; private set; }
 
         public string FullName { get { return $"{this.Name}为{this.Name2}"; } }

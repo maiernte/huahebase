@@ -81,6 +81,7 @@
     <Compile Include="GuaTest.cs" />
     <Compile Include="ShenShaTest.cs" />
     <Compile Include="BookManagerTest.cs" />
+    <Compile Include="HHTimeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HuaheBase\HuaheBase.csproj">

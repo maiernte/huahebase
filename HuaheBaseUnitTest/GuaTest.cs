@@ -125,6 +125,68 @@ namespace HuaheBaseUnitTest
 
             Assert.AreEqual("震", 雷泽归妹.上卦.Name);
             Assert.AreEqual("兑", 雷泽归妹.下卦.Name);
+
+            Gua64 天风姤 = new Gua64("天风姤");
+            Assert.AreEqual("乾", 天风姤.上卦.Name);
+            Assert.AreEqual("巽", 天风姤.下卦.Name);
+
+            Gua64 艮为山 = new Gua64("艮为山");
+            Assert.AreEqual("艮", 艮为山.上卦.Name);
+            Assert.AreEqual("艮", 艮为山.下卦.Name);
+
+            Gua64 地火明夷 = new Gua64(0, 5);
+            Assert.AreEqual("坤", 地火明夷.上卦.Name);
+            Assert.AreEqual("离", 地火明夷.下卦.Name);
+            Assert.AreEqual("地火明夷", 地火明夷.Name);
+
+            地火明夷 = new Gua64(5);
+            Assert.AreEqual("坤", 地火明夷.上卦.Name);
+            Assert.AreEqual("离", 地火明夷.下卦.Name);
+            Assert.AreEqual("地火明夷", 地火明夷.Name);
+
+            雷泽归妹 = new Gua64(11);
+            Assert.AreEqual("雷泽归妹", 雷泽归妹.Name);
+            Assert.AreEqual("归妹", 雷泽归妹.NameShort);
+
+            天风姤 = new Gua64(62);
+            Assert.AreEqual("乾", 天风姤.上卦.Name);
+            Assert.AreEqual("巽", 天风姤.下卦.Name);
+        }
+
+        [TestMethod]
+        public void 卦宫世位Test()
+        {
+            Gua64 泽火革 = new Gua64("泽火革");
+            Assert.AreEqual(3, 泽火革.世爻);
+            Assert.AreEqual("坎", 泽火革.卦宫.Name);
+
+            Gua64 水泽节 = new Gua64("水泽节");
+            Assert.AreEqual(0, 水泽节.世爻);
+            Assert.AreEqual("坎", 水泽节.卦宫.Name);
+
+            Gua64 火地晋 = new Gua64("火地晋");
+            Assert.AreEqual(3, 火地晋.世爻);
+            Assert.AreEqual("乾", 火地晋.卦宫.Name);
+
+            Gua64 风泽中孚 = new Gua64("风泽中孚");
+            Assert.AreEqual(3, 风泽中孚.世爻);
+            Assert.AreEqual("艮", 风泽中孚.卦宫.Name);
+
+            Gua64 山天大畜 = new Gua64("山天大畜");
+            Assert.AreEqual(1, 山天大畜.世爻);
+            Assert.AreEqual("艮", 山天大畜.卦宫.Name);
+
+            Gua64 天地否 = new Gua64("天地否");
+            Assert.AreEqual(2, 天地否.世爻);
+            Assert.AreEqual("乾", 天地否.卦宫.Name);
+
+            Gua64 山地剥 = new Gua64("山地剥");
+            Assert.AreEqual(4, 山地剥.世爻);
+            Assert.AreEqual("乾", 山地剥.卦宫.Name);
+
+            Gua64 离为火 = new Gua64("离为火");
+            Assert.AreEqual(5, 离为火.世爻);
+            Assert.AreEqual("离", 离为火.卦宫.Name);
         }
     }
 }
