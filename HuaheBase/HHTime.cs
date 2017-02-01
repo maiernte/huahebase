@@ -64,7 +64,7 @@ namespace HuaheBase
         {
             get
             {
-                return this.Type == TimeType.干支 ? this.Bazi.年 : new GanZhi(this.datetime.YearGZ);
+                return this.Bazi != null ? this.Bazi.年 : new GanZhi(this.datetime.YearGZ);
             }
         }
 
@@ -72,7 +72,7 @@ namespace HuaheBase
         {
             get
             {
-                return this.Type == TimeType.干支 ? this.Bazi.月 : new GanZhi(this.datetime.MonthGZ);
+                return this.Bazi != null ? this.Bazi.月 : new GanZhi(this.datetime.MonthGZ);
             }
         }
 
@@ -80,7 +80,7 @@ namespace HuaheBase
         {
             get
             {
-                return this.Type == TimeType.干支 ? this.Bazi.日 : new GanZhi(this.datetime.DayGZ);
+                return this.Bazi != null ? this.Bazi.日 : new GanZhi(this.datetime.DayGZ);
             }
         }
 
@@ -89,7 +89,7 @@ namespace HuaheBase
             get
             {
 
-                if (this.Type == TimeType.干支)
+                if (this.Bazi != null)
                 {
                     return this.Bazi.时;
                 }
