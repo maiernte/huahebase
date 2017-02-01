@@ -154,19 +154,19 @@ namespace HuaheBaseUnitTest
             res = LnBase.查找八字("丁亥", "庚戌", "己巳", 1930, 方向.逆行);
             Assert.AreEqual(new DateTime(1887, 10, 31), res);
 
-            res = LnBase.SearchNL(1978, "五", "廿六", false);
+            res = LnBase.查找农历(1978, "五", "廿六", false);
             Assert.AreEqual(new DateTime(1978, 7, 1), res);
 
             try
             {
-                res = LnBase.SearchNL(1978, "五", "廿六", true);
+                res = LnBase.查找农历(1978, "五", "廿六", true);
                 Assert.IsTrue(false, "应该找不到");
             }
             catch (Exception)
             {
             }
 
-            res = LnBase.SearchNL(2017, "六", "初一", true);
+            res = LnBase.查找农历(2017, "六", "初一", true);
             Assert.AreEqual(new DateTime(2017, 7, 23), res);
         }
 
@@ -220,6 +220,36 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual(1986, day.Year);
             Assert.AreEqual(10, day.Month);
             Assert.AreEqual(15, day.Day);
+        }
+
+        [TestMethod]
+        public void 建除日Test()
+        {
+            LnDate date = new LnDate(2017, 2, 1);
+            GanZhi yue = new GanZhi(date.MonthGZ);
+            GanZhi ri = new GanZhi(date.DayGZ);
+            JianChu jianchu = JianChu.Get(yue.Zhi, ri.Zhi);
+            Assert.AreEqual("破日", jianchu.Name);
+
+            date = new LnDate(2017, 2, 2);
+            yue = new GanZhi(date.MonthGZ);
+            ri = new GanZhi(date.DayGZ);
+            jianchu = JianChu.Get(yue.Zhi, ri.Zhi);
+            Assert.AreEqual("危日", jianchu.Name);
+
+            date = new LnDate(2017, 2, 8);
+            HuangLi hl = LnBase.黄历日(date);
+            Assert.AreEqual("建日", hl.建除.Name);
+
+            date = new LnDate(2017, 2, 9);
+            hl = LnBase.黄历日(date);
+            Assert.AreEqual("除日", hl.建除.Name);
+            Assert.AreEqual(LnBase.忌日.杨公十三忌 | LnBase.忌日.岁破, hl.忌日);
+
+            LnBase.忌日 jiri = LnBase.忌日.上朔 | LnBase.忌日.月破;
+            Assert.AreNotEqual(LnBase.忌日.百无禁忌, jiri & LnBase.忌日.上朔);
+            Assert.AreNotEqual(LnBase.忌日.百无禁忌, jiri & LnBase.忌日.月破);
+            Assert.AreEqual(LnBase.忌日.百无禁忌, jiri & LnBase.忌日.杨公十三忌);
         }
     }
 }

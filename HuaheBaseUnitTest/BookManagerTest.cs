@@ -15,7 +15,6 @@ namespace HuaheBaseUnitTest
             Assert.IsTrue(true);
 
             res = bk.Create();
-            int i = 0;
         }
     }
 }

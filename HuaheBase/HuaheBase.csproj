@@ -46,6 +46,7 @@
     <Compile Include="Gua64.cs" />
     <Compile Include="Gua8.cs" />
     <Compile Include="HHExtentions.cs" />
+    <Compile Include="JianChu.cs" />
     <Compile Include="Land.cs" />
     <Compile Include="LnBase.cs" />
     <Compile Include="LnDate.cs" />

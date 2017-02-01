@@ -9,6 +9,12 @@ namespace HuaheBase
 {
     public static class LnBase
     {
+        [Flags]
+        public enum 忌日 { 百无禁忌 = 0, 岁破 = 1, 月破 = 2, 上朔 = 4, 杨公十三忌 = 8 }
+
+        private static string[] 上朔Def = new string[] { "癸亥", "己巳", "乙亥", "辛巳", "丁亥", "癸巳", "己亥", "乙巳", "辛亥", "丁巳" };
+        private static string[] 杨公Def = new string[] { "正月十三", "二月十一", "三月初九", "四月初七", "五月初五", "六月初三", "七月初一", "七月廿九", "八月廿七", "九月廿五", "十月廿三", "十一月廿一", "十二月十九" };
+
         public static DateTime 起运时间(DateTime birthday, 方向 direction)
         {
             // 阳男阴女顺行
@@ -122,7 +128,21 @@ namespace HuaheBase
             throw new Exception("六百年内找不到结果！");
         }
 
-        public static DateTime SearchNL(int year, string yue, string day, bool leap = false)
+        public static HuangLi 黄历日(LnDate date)
+        {
+            HuangLi huanli = new HuangLi();
+            huanli.忌日 |= LnBase.Calc岁破(date);
+            huanli.忌日 |= LnBase.Calc月破(date);
+            huanli.忌日 |= LnBase.Calc上朔(date);
+            huanli.忌日 |= LnBase.Calc杨公忌日(date);
+
+            GanZhi yue = new GanZhi(date.MonthGZ);
+            GanZhi ri = new GanZhi(date.DayGZ);
+            huanli.建除 = JianChu.Get(yue.Zhi, ri.Zhi);
+            return huanli;
+        }
+
+        public static DateTime 查找农历(int year, string yue, string day, bool leap = false)
         {
             LnDate lndate = new LnDate(year, 1, 1);
             while (lndate.Year == year)
@@ -160,5 +180,47 @@ namespace HuaheBase
 
             return yearDiff;
         }
+
+        private static 忌日 Calc岁破(LnDate date)
+        {
+            var 年 = new GanZhi(date.YearGZ);
+            var 日 = new GanZhi(date.DayGZ);
+            return Math.Abs(年.Zhi.Index - 日.Zhi.Index) == 6 ? LnBase.忌日.岁破 : 忌日.百无禁忌;
+        }
+
+        private static 忌日 Calc月破(LnDate date)
+        {
+            var 月 = new GanZhi(date.MonthGZ);
+            var 日 = new GanZhi(date.DayGZ);
+            return Math.Abs(月.Zhi.Index - 日.Zhi.Index) == 6 ? LnBase.忌日.月破 : 忌日.百无禁忌;
+        }
+
+        /// <summary>
+        /// 甲年癸亥日，乙年己巳日。。。。。。
+        /// var arr = ["癸亥", "己巳", "乙亥", "辛巳", "丁亥", "癸巳", "己亥", "乙巳", "辛亥", "丁巳"];
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private static 忌日 Calc上朔(LnDate date)
+        {
+            var 年 = new GanZhi(date.YearGZ);
+            return LnBase.上朔Def[年.Gan.Index] == date.DayGZ ? LnBase.忌日.上朔 : 忌日.百无禁忌;
+        }
+
+        private static 忌日 Calc杨公忌日(LnDate date)
+        {
+            string flag = date.MonthNL + "月" + date.DayNL;
+            return LnBase.杨公Def.FirstOrDefault(y => y == flag) != null ? LnBase.忌日.杨公十三忌 : 忌日.百无禁忌;
+        }
+    }
+
+    public class HuangLi
+    {
+        internal HuangLi() { }
+
+        public JianChu 建除 { get; internal set; }
+
+        public LnBase.忌日 忌日 { get; internal set; } = LnBase.忌日.百无禁忌;
     }
 }
