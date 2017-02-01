@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using HuaheBase.Bazi;
 
 namespace HuaheBase
 {
     public class ShiYun : GanZhi, IDisposable
     {
         public enum YunType { 命局, 大运, 流年, 小运}
+
+        private static ShiYun zero;
 
         private IEnumerable<ShiYun> liunian;
 
@@ -24,6 +27,14 @@ namespace HuaheBase
         internal Func<DateTime, DateTime, IEnumerable<ShiYun>> 起小运;
         internal Func<DateTime, DateTime, IEnumerable<ShiYun>> 起流年;
 
+        public static ShiYun Zero
+        {
+            get
+            {
+                return ShiYun.zero ?? (ShiYun.zero = new ShiYun(-1, ShiYun.YunType.命局, null));
+            }
+        }
+
         public YunType Type { get; private set; }
 
         public BaZiList<GanZhi> Base { get; private set; }
@@ -32,6 +43,11 @@ namespace HuaheBase
         {
             get
             {
+                if(this == ShiYun.Zero)
+                {
+                    return string.Empty;
+                }
+
                 return this.Zhi.长生(this.Base.日主);
             }
         }
@@ -44,6 +60,11 @@ namespace HuaheBase
         {
             get
             {
+                if (this == ShiYun.Zero)
+                {
+                    return string.Empty;
+                }
+
                 return 十神.Calc10(this.Base.日主, this.Gan);
             }
         }
@@ -52,6 +73,11 @@ namespace HuaheBase
         {
             get
             {
+                if (this == ShiYun.Zero)
+                {
+                    return string.Empty;
+                }
+
                 return 十神.Calc10(this.Base.日主, this.Zhi);
             }
         }

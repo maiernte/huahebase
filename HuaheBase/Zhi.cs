@@ -76,6 +76,11 @@ namespace HuaheBase
         {
             get
             {
+                if(this == Zhi.Zero)
+                {
+                    return null;
+                }
+
                 return WuXing.Get(wuxing[this.Index]);
             }
         }
@@ -84,6 +89,11 @@ namespace HuaheBase
         {
             get
             {
+                if (this == Zhi.Zero)
+                {
+                    return Zhi.Zero;
+                }
+
                 int idx = (this.Index + 6) % 12;
                 return Zhi.Get(idx);
             }
@@ -93,6 +103,11 @@ namespace HuaheBase
         {
             get
             {
+                if (this == Zhi.Zero)
+                {
+                    return Zhi.Zero;
+                }
+
                 return Zhi.Get(he[this.Index]);
             }
         }
@@ -101,6 +116,11 @@ namespace HuaheBase
         {
             get
             {
+                if (this == Zhi.Zero)
+                {
+                    return new Gan[0];
+                }
+
                 var res = from i in cangans[this.Index]
                           select Gan.Get(i);
                 return res.ToArray();

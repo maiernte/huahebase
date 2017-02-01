@@ -2,6 +2,7 @@
 using System.Linq;
 using HuaheBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using HuaheBase.Bazi;
 
 namespace HuaheBaseUnitTest
 {
@@ -376,10 +377,10 @@ namespace HuaheBaseUnitTest
             
             // 寅卯月见庚申、辛酉
             // 春庚申，辛酉，夏壬子，癸亥，秋甲寅，乙卯，冬丙午，丁巳
-            BaZiList<GanZhi> bazi1 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲寅"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi2 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲午"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi3 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲申"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi4 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲子"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi1 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("丙寅"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi2 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("庚午"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi3 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("壬申"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi4 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("丙子"), new GanZhi("甲辰"), new GanZhi("戊辰"));
 
             ShenSha ss庚申 = new ShenSha(name, new GanZhi[] { new GanZhi("庚申") });
             ss庚申.Bazi = bazi1;
@@ -401,7 +402,7 @@ namespace HuaheBaseUnitTest
             ss甲子.Bazi = bazi4;
             Assert.IsNull(ss甲子.Calc());
 
-            BaZiList<GanZhi> bazi5 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲辰"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi5 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("戊辰"), new GanZhi("甲辰"), new GanZhi("戊辰"));
             ShenSha ss = new ShenSha(name, new GanZhi[] { new GanZhi("庚申"), new GanZhi("壬子"), new GanZhi("乙卯") });
             ss.Bazi = bazi5;
             Assert.IsNull(ss.Calc());
@@ -416,10 +417,10 @@ namespace HuaheBaseUnitTest
             // 寅卯辰年生人，柱中见巳为孤见丑为寡
             // 巳午未年生人，柱中见申为孤见辰为寡
             // 申酉戌年生人，柱中见亥为孤见未为寡
-            BaZiList<GanZhi> bazi1 = new BaZiList<GanZhi>(new GanZhi("甲子"), new GanZhi("甲寅"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi2 = new BaZiList<GanZhi>(new GanZhi("甲辰"), new GanZhi("甲午"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi3 = new BaZiList<GanZhi>(new GanZhi("甲午"), new GanZhi("甲申"), new GanZhi("甲辰"), new GanZhi("甲辰"));
-            BaZiList<GanZhi> bazi4 = new BaZiList<GanZhi>(new GanZhi("甲戌"), new GanZhi("甲子"), new GanZhi("甲辰"), new GanZhi("甲辰"));
+            BaZiList<GanZhi> bazi1 = BaZiList.Create(new GanZhi("甲子"), new GanZhi("丙寅"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi2 = BaZiList.Create(new GanZhi("甲辰"), new GanZhi("庚午"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi3 = BaZiList.Create(new GanZhi("甲午"), new GanZhi("壬申"), new GanZhi("甲辰"), new GanZhi("戊辰"));
+            BaZiList<GanZhi> bazi4 = BaZiList.Create(new GanZhi("甲戌"), new GanZhi("丙子"), new GanZhi("甲辰"), new GanZhi("戊辰"));
 
             ShenSha ss庚寅 = new ShenSha(name, new GanZhi[] { new GanZhi("庚寅") });
             ss庚寅.Bazi = bazi1;

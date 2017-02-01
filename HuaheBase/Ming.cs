@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HuaheBase.Bazi;
 
 namespace HuaheBase
 {
@@ -41,7 +42,7 @@ namespace HuaheBase
             Zhi shizhi = Zhi.Get((int)((date.Hour + 1) / 2) % 12);
             GanZhi shi = day.Gan.起月时(shizhi, 柱位.时);
             shi = sureTime ? shi : GanZhi.Zero;
-            this.bazi = new BaZiList<GanZhi>(year, month, day, shi);
+            this.bazi = BaZiList.Create(year, month, day, shi);
 
             this.InitData();
         }
@@ -72,7 +73,7 @@ namespace HuaheBase
                 }
             }
 
-            this.bazi = new BaZiList<GanZhi>(year, month, day, shi);
+            this.bazi = BaZiList.Create(year, month, day, shi);
             this.InitData();
         }
 
@@ -136,15 +137,15 @@ namespace HuaheBase
 
             this.dayuns = new List<ShiYun>();
             this.神煞 = new List<ShenSha>();
-            this.bazi.Clear();
-            this.四柱.Clear();
+            this.bazi = null;
+            this.四柱 = null;
         }
 
         private void InitData()
         {
             List<ShiYun> tmp = new List<ShiYun>();
-            this.bazi.ForEach(gz => tmp.Add(new ShiYun(gz, ShiYun.YunType.命局, this.bazi)));
-            this.四柱 = new BaZiList<ShiYun>(tmp[0], tmp[1], tmp[2], tmp[3]);
+            this.bazi.Items.ForEach(gz => tmp.Add(new ShiYun(gz, ShiYun.YunType.命局, this.bazi)));
+            this.四柱 = BaZiList.Create(tmp[0], tmp[1], tmp[2], tmp[3]);
 
             this.命宫 = CalcMingGong(this.四柱);
             this.胎元 = CalcTaiYuan(this.四柱);
@@ -228,7 +229,7 @@ namespace HuaheBase
         {
             // "金", "水", "木", "火", "土"
             int[] sum = new int[BaseDef.WuXings.Count()];
-            bazi.ForEach(gz => 
+            bazi.Items.ForEach(gz => 
             {
                 if(gz != GanZhi.Zero)
                 {

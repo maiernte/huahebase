@@ -217,5 +217,12 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("丁戊辛", string.Join("", 戌.藏干.Select(g => g.Name)));
             Assert.AreEqual("甲戊壬", string.Join("", 亥.藏干.Select(g => g.Name)));
         }
+
+        [TestMethod]
+        public void 时运Test()
+        {
+            ShiYun zero = ShiYun.Zero;
+            Assert.IsNotNull(zero);
+        }
     }
 }

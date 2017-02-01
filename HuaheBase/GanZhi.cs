@@ -117,7 +117,7 @@ namespace HuaheBase
         {
             get
             {
-                if(this.Gan == null)
+                if(this.Gan == Gan.Zero)
                 {
                     return string.Empty;
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HuaheBase.Bazi;
 
 namespace HuaheBase
 {
@@ -19,7 +20,7 @@ namespace HuaheBase
             this.Type = TimeType.时间;
             this.datetime = new LnDate(date);
             this.time = date.TimeOfDay;
-            this.bazi = new BaZiList<GanZhi>(this.年, this.月, this.日, this.时);
+            this.bazi = BaZiList.Create(this.年, this.月, this.日, this.时);
         }
 
         public HHTime(BaZiList<GanZhi> ganzhi)

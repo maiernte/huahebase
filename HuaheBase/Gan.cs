@@ -134,7 +134,11 @@ namespace HuaheBase
         {
             get
             {
-                if (this.Index % 2 == 0)
+                if(this.Index == -1)
+                {
+                    return Zhi.Zero;
+                }
+                else if (this.Index % 2 == 0)
                 {
                     int idx = (int)(this.Index / 2);
                     return Zhi.Get(changshengIndexes[idx]);

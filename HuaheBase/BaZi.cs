@@ -1,32 +1,36 @@
 ﻿using System;
 
-namespace HuaheBase
+namespace HuaheBase.Bazi
 {
     /// <summary>
     /// 基本的八字结构
     /// </summary>
-    public class BaZiList<T>: System.Collections.Generic.List<T>
+    public class BaZiList<T>
     {
-        public BaZiList(T nian, T yue, T ri, T shi)
+        private T[] list = new T[4];
+
+        internal BaZiList(T nian, T yue, T ri, T shi)
         {
-            if(nian == null || yue == null || ri == null || shi  == null)
+            if(nian == null && yue == null && ri == null && shi  == null)
             {
                 throw new ArgumentException("干支不能为 null。请输入 T.Zero");
             }
 
-            this.Add(nian);
-            this.Add(yue);
-            this.Add(ri);
-            this.Add(shi);
+            this.list[0] = nian;
+            this.list[1] = yue;
+            this.list[2] = ri;
+            this.list[3] = shi;
 
             this.Check();
         }
+
+        public T[] Items { get { return this.list; } }
 
         public Gan 日主
         {
             get
             {
-                return (this[2] as GanZhi).Gan;
+                return (this.list[2] as GanZhi).Gan;
             }
         }
 
@@ -34,7 +38,7 @@ namespace HuaheBase
         {
             get
             {
-                return this[0];
+                return this.list[0];
             }
         }
 
@@ -42,7 +46,7 @@ namespace HuaheBase
         {
             get
             {
-                return this[1];
+                return this.list[1];
             }
         }
 
@@ -50,7 +54,7 @@ namespace HuaheBase
         {
             get
             {
-                return this[2];
+                return this.list[2];
             }
         }
 
@@ -58,7 +62,7 @@ namespace HuaheBase
         {
             get
             {
-                return this[3];
+                return this.list[3];
             }
         }
 
@@ -81,6 +85,20 @@ namespace HuaheBase
                     throw new ArgumentException($"'{日}'日不存在'{时}'时。");
                 }
             }
+        }
+    }
+
+    public static class BaZiList
+    {
+        public static BaZiList<GanZhi> Create(GanZhi nian, GanZhi yue, GanZhi ri, GanZhi shi)
+        {
+            return new BaZiList<GanZhi>(nian ?? GanZhi.Zero, yue ?? GanZhi.Zero, ri ?? GanZhi.Zero, shi ?? GanZhi.Zero);
+        }
+
+        public static BaZiList<ShiYun> Create(ShiYun nian, ShiYun yue, ShiYun ri, ShiYun shi)
+        {
+            ShiYun zero = new ShiYun(-1, ShiYun.YunType.命局, null);
+            return new BaZiList<ShiYun>(nian ?? ShiYun.Zero, yue ?? ShiYun.Zero, ri ?? ShiYun.Zero, shi ?? ShiYun.Zero);
         }
     }
 }

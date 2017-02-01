@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HuaheBase;
+using HuaheBase.Bazi;
 
 namespace HuaheBaseUnitTest
 {
@@ -10,28 +11,31 @@ namespace HuaheBaseUnitTest
         [TestMethod]
         public void BaziListTest()
         {
-            BaZiList<GanZhi> bazi = new BaZiList<GanZhi>(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("丁卯"));
+            BaZiList<GanZhi> bazi = BaZiList.Create(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("丁卯"));
             Assert.IsNotNull(bazi);
 
-            bazi = new BaZiList<GanZhi>(new GanZhi(""), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi(null));
+            bazi = BaZiList.Create(new GanZhi(""), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi(null));
             Assert.IsNotNull(bazi);
             Assert.AreEqual(GanZhi.Zero, bazi.年);
             Assert.AreEqual(GanZhi.Zero, bazi.时);
 
-            bazi = new BaZiList<GanZhi>(new GanZhi(""), new GanZhi(""), new GanZhi("甲子"), new GanZhi(null));
+            bazi = BaZiList.Create(new GanZhi(""), new GanZhi(""), new GanZhi("甲子"), new GanZhi(null));
             Assert.IsNotNull(bazi);
             Assert.AreEqual(GanZhi.Zero, bazi.月);
 
-            bazi = new BaZiList<GanZhi>(new GanZhi(""), new GanZhi(""), new GanZhi(""), new GanZhi(null));
+            bazi = BaZiList.Create(new GanZhi(""), new GanZhi(""), new GanZhi(""), new GanZhi(null));
             Assert.IsNotNull(bazi);
             Assert.AreEqual(GanZhi.Zero, bazi.日);
 
-            bazi = new BaZiList<GanZhi>(new GanZhi(""), new GanZhi(""), new GanZhi(""), new GanZhi("甲子"));
+            bazi = BaZiList.Create(new GanZhi(""), new GanZhi(""), new GanZhi(""), new GanZhi("甲子"));
+            Assert.IsNotNull(bazi);
+
+            bazi = BaZiList.Create(new GanZhi(""), new GanZhi("卯"), new GanZhi("甲子"), new GanZhi(""));
             Assert.IsNotNull(bazi);
 
             try
             {
-                bazi = new BaZiList<GanZhi>(new GanZhi("戊午"), new GanZhi("庚午"), new GanZhi("甲子"), new GanZhi("丁卯"));
+                bazi = BaZiList.Create(new GanZhi("戊午"), new GanZhi("庚午"), new GanZhi("甲子"), new GanZhi("丁卯"));
             }
             catch (ArgumentException)
             {
@@ -43,7 +47,7 @@ namespace HuaheBaseUnitTest
 
             try
             {
-                bazi = new BaZiList<GanZhi>(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("乙卯"));
+                bazi = BaZiList.Create(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("乙卯"));
             }
             catch (ArgumentException)
             {
@@ -68,7 +72,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("1978年7月1日 6时45分", time.TimeText);
             Assert.AreNotEqual(new DateTime(), time.DateTime);
 
-            BaZiList<GanZhi> bazi = new BaZiList<GanZhi>(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("丁卯"));
+            BaZiList<GanZhi> bazi = BaZiList.Create(new GanZhi("戊午"), new GanZhi("戊午"), new GanZhi("甲子"), new GanZhi("丁卯"));
             time = new HHTime(bazi);
             Assert.AreEqual(HHTime.TimeType.干支, time.Type);
             Assert.AreEqual("戊午年 戊午月 甲子日 丁卯时", time.TimeText);
