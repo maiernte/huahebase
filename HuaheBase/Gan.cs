@@ -170,5 +170,10 @@ namespace HuaheBase
                 return new GanZhi(g, zhi.Index);
             }
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

@@ -15,12 +15,10 @@ namespace HuaheBase
 
         public enum TimeType { 时间, 干支 }
 
-        public HHTime(DateTime date)
+        public HHTime(DateTime date, bool 确定时辰 = true)
         {
             this.Type = TimeType.时间;
-            this.datetime = new LnDate(date);
-            this.time = date.TimeOfDay;
-            this.bazi = BaZiList.Create(this.年, this.月, this.日, this.时);
+            this.bazi = this.InitBaZiFromDateTime(date, 确定时辰);
         }
 
         public HHTime(BaZiList<GanZhi> ganzhi)
@@ -103,6 +101,18 @@ namespace HuaheBase
             }
         }
 
+        public override string ToString()
+        {
+            if (this.Type == TimeType.时间)
+            {
+                return this.DateTime.ToString();
+            }
+            else
+            {
+                return ($"{this.年.Name}/{this.月.Name}/{this.日.Name}/{this.时.Name}").Replace("口", string.Empty);
+            }
+        }
+
         public static string ChineseString(DateTime d)
         {
             return $"{d.Year}年{d.Month}月{d.Day}日 {d.Hour}时{d.Minute}分";
@@ -111,6 +121,33 @@ namespace HuaheBase
         public static HHTime Parse(string text)
         {
             return null;
+        }
+
+        private BaZiList<GanZhi> InitBaZiFromDateTime(DateTime date, bool 确定时辰)
+        {
+            this.datetime = new LnDate(date);
+            this.time = date.TimeOfDay;
+
+            GanZhi 年 = new GanZhi(this.datetime.YearGZ);
+            GanZhi 月 = new GanZhi(this.datetime.MonthGZ);
+            GanZhi 日 = new GanZhi(this.datetime.DayGZ);
+
+            LnDate 明天 = this.datetime.Add(1);
+            if (date.Hour >= 23)
+            {
+                日 = 日.Add(1);
+                年 = new GanZhi(明天.YearGZ);
+                月 = new GanZhi(明天.MonthGZ);
+            }
+
+            GanZhi 时 = GanZhi.Zero;
+            if(确定时辰)
+            {
+                Zhi 时支 = Zhi.Get((int)((date.Hour + 1) / 2) % 12);
+                时 = 日.Gan.起月时(时支, 柱位.时);
+            }
+
+            return BaZiList.Create(年, 月, 日, 时);
         }
     }
 }

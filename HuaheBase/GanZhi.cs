@@ -172,6 +172,11 @@ namespace HuaheBase
             return new GanZhi(g, z);
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         private int CalcIndex()
         {
             if(this.Gan == Gan.Zero)

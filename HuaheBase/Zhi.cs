@@ -142,5 +142,10 @@ namespace HuaheBase
 
             return "计算长生十二宫出错";
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }
