@@ -28,6 +28,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("戊午", ming1.四柱.月.Name);
             Assert.AreEqual("甲子", ming1.四柱.日.Name);
             Assert.AreEqual("口口", ming1.四柱.时.Name);
+            Assert.IsFalse(ming1.Has流年, "Has流年 false");
 
             // 2017.2.3 晚 23后换月令 所以当天还是
             DateTime old = new DateTime(2017, 2, 3, 22, 45, 0);
@@ -36,6 +37,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("辛丑", mingOld.四柱.月.Name);
             Assert.AreEqual("辛酉", mingOld.四柱.日.Name);
             Assert.AreEqual("己亥", mingOld.四柱.时.Name);
+            Assert.IsTrue(mingOld.Has流年, "Has流年 true");
 
             DateTime lichun = new DateTime(2017, 2, 3, 23, 45, 0);
             Ming mingLiChun = new Ming(new HHTime(lichun), 性别.男);

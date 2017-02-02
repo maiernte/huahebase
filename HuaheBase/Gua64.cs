@@ -76,6 +76,42 @@ namespace HuaheBase
 
         public int 世爻 { get; private set; }
 
+        public string 属性
+        {
+            get
+            {
+                int 下卦起支 = this.下卦.干支(0).Zhi.Index;
+                int 上卦起支 = this.上卦.干支(3).Zhi.Index;
+                if ((下卦起支 + 上卦起支) % 12 == 1 )
+                {
+                    return "六合";
+                }
+
+                if(Math.Abs(下卦起支 - 上卦起支) == 6)
+                {
+                    return "六冲";
+                }
+
+                int tmp = this.上卦.Index ^ this.下卦.Index;
+                if(tmp == 5)
+                {
+                    return "游魂";
+                }
+
+                if (tmp == 2)
+                {
+                    return "归魂";
+                }
+
+                return string.Empty;
+            }
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         /// <summary>
         /// item1 为世爻位置, item2 为卦宫
         /// </summary>

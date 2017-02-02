@@ -30,17 +30,6 @@ namespace HuaheBase
 
         public string 生日 { get { return this.time.TimeText; } }
 
-        // 阳男阴女顺行
-        public 方向 方向
-        {
-            get
-            {
-                // 阳男阴女顺行
-                var direction = (this.性别 == 性别.男 ? 1 : -1) * (this.四柱.年.Zhi.Index % 2 == 0 ? 1 : -1);
-                return direction == 1 ? 方向.顺行 : 方向.逆行;
-            }
-        }
-
         public BaZiList<ShiYun> 四柱 { get; private set; }
 
         public GanZhi 命宫 { get; private set; }
@@ -66,6 +55,17 @@ namespace HuaheBase
             get
             {
                 return this.time.Type == HHTime.TimeType.时间 && this.time.时 != GanZhi.Zero;
+            }
+        }
+
+        // 阳男阴女顺行
+        private 方向 方向
+        {
+            get
+            {
+                // 阳男阴女顺行
+                var direction = (this.性别 == 性别.男 ? 1 : -1) * (this.四柱.年.Zhi.Index % 2 == 0 ? 1 : -1);
+                return direction == 1 ? 方向.顺行 : 方向.逆行;
             }
         }
 

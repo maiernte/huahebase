@@ -66,6 +66,11 @@ namespace HuaheBase.Bazi
             }
         }
 
+        public override string ToString()
+        {
+            return ($"{this.年.ToString()}/{this.月.ToString()}/{this.日.ToString()}/{this.时.ToString()}").Replace("口", string.Empty);
+        }
+
         private void Check()
         {
             GanZhi year = this.年 as GanZhi;

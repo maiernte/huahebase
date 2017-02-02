@@ -133,6 +133,7 @@ namespace HuaheBaseUnitTest
             Gua64 艮为山 = new Gua64("艮为山");
             Assert.AreEqual("艮", 艮为山.上卦.Name);
             Assert.AreEqual("艮", 艮为山.下卦.Name);
+            Assert.AreEqual("六冲", 艮为山.属性);
 
             Gua64 地火明夷 = new Gua64(0, 5);
             Assert.AreEqual("坤", 地火明夷.上卦.Name);
@@ -187,6 +188,64 @@ namespace HuaheBaseUnitTest
             Gua64 离为火 = new Gua64("离为火");
             Assert.AreEqual(5, 离为火.世爻);
             Assert.AreEqual("离", 离为火.卦宫.Name);
+        }
+
+        [TestMethod]
+        public void Gua64属性Test()
+        {
+            Gua64 风火家人 = new Gua64("风火");
+            Assert.AreEqual(string.Empty, 风火家人.属性);
+            Assert.AreEqual("木", 风火家人.卦宫.五行.Name);
+
+            Gua64 艮为山 = new Gua64("艮为山");
+            Assert.AreEqual("六冲", 艮为山.属性);
+            Assert.AreEqual("土", 艮为山.卦宫.五行.Name);
+
+            Gua64 地雷复 = new Gua64("地雷复");
+            Assert.AreEqual("六合", 地雷复.属性);
+            Assert.AreEqual("土", 地雷复.卦宫.五行.Name);
+
+            Gua64 山雷颐 = new Gua64("山雷颐");
+            Assert.AreEqual("游魂", 山雷颐.属性);
+            Assert.AreEqual("木", 山雷颐.卦宫.五行.Name);
+
+            Gua64 水地比 = new Gua64("水地比");
+            Assert.AreEqual("归魂", 水地比.属性);
+            Assert.AreEqual("土", 水地比.卦宫.五行.Name);
+        }
+
+        [TestMethod]
+        public void Gua六神Test()
+        {
+            Gua gua = new Gua("震为雷", "地雷复", HHTime.Parse("/辛丑/庚申/"));
+            Assert.IsNotNull(gua);
+
+            Assert.AreEqual("白虎", gua.Lines[0].六神);
+            Assert.AreEqual("玄武", gua.Lines[1].六神);
+            Assert.AreEqual("青龙", gua.Lines[2].六神);
+            Assert.AreEqual("朱雀", gua.Lines[3].六神);
+            Assert.AreEqual("勾陈", gua.Lines[4].六神);
+            Assert.AreEqual("螣蛇", gua.Lines[5].六神);
+
+            gua = new Gua("震为雷", "地雷复", HHTime.Parse("/辛丑/己巳/"));
+            Assert.IsNotNull(gua);
+
+            Assert.AreEqual("螣蛇", gua.Lines[0].六神);
+            Assert.AreEqual("白虎", gua.Lines[1].六神);
+            Assert.AreEqual("玄武", gua.Lines[2].六神);
+            Assert.AreEqual("青龙", gua.Lines[3].六神);
+            Assert.AreEqual("朱雀", gua.Lines[4].六神);
+            Assert.AreEqual("勾陈", gua.Lines[5].六神);
+
+            gua = new Gua("震为雷", "地雷复", HHTime.Parse("/辛丑/甲子/"));
+            Assert.IsNotNull(gua);
+
+            Assert.AreEqual("青龙", gua.Lines[0].六神);
+            Assert.AreEqual("朱雀", gua.Lines[1].六神);
+            Assert.AreEqual("勾陈", gua.Lines[2].六神);
+            Assert.AreEqual("螣蛇", gua.Lines[3].六神);
+            Assert.AreEqual("白虎", gua.Lines[4].六神);
+            Assert.AreEqual("玄武", gua.Lines[5].六神);
         }
     }
 }

@@ -73,6 +73,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("戊午", time.月.Name);
             Assert.AreEqual("甲子", time.日.Name);
             Assert.AreEqual("丁卯", time.时.Name);
+            Assert.AreEqual("五月廿六", time.农历);
 
             Assert.AreEqual("1978年7月1日 6时45分", time.TimeText);
             Assert.AreNotEqual(new DateTime(), time.DateTime);
@@ -125,6 +126,7 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("辛丑", ming.月.Name);
             Assert.AreEqual("庚申", ming.日.Name);
             Assert.AreEqual("庚辰", ming.时.Name);
+            
 
             BaZiList<GanZhi> bazi = BaZiList.Create(new GanZhi(""), new GanZhi("卯"), new GanZhi("甲子"), new GanZhi(""));
             ming = new HHTime(bazi);
@@ -136,5 +138,30 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("口卯月 甲子日 ", ming.TimeText);
             Assert.AreEqual("/卯/甲子/", ming.ToString());
         }
+
+        [TestMethod]
+        public void ParseMethodeTest()
+        {
+            DateTime day = new DateTime(1978, 7, 1, 6, 45, 0);
+            string text = day.ToString();
+
+            HHTime time = HHTime.Parse(text);
+            Assert.IsNotNull(time);
+            Assert.AreEqual(text, time.ToString());
+
+            time = HHTime.Parse(text, 确定时辰:false);
+            Assert.IsNotNull(time);
+            Assert.AreEqual(day.ToShortDateString(), time.ToString());
+
+            BaZiList<GanZhi> bazi = BaZiList.Create(new GanZhi(""), new GanZhi("卯"), new GanZhi("甲子"), new GanZhi(""));
+            Assert.AreEqual("/卯/甲子/", bazi.ToString());
+            time = HHTime.Parse(bazi.ToString());
+            Assert.AreEqual(bazi.ToString(), time.ToString());
+
+            time = HHTime.Parse("//丁卯/");
+            Assert.AreEqual("//丁卯/", time.ToString());
+        }
+
+
     }
 }

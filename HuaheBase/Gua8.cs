@@ -72,6 +72,11 @@ namespace HuaheBase
             return res;
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
+
         /// <summary>
         /// 取爻位的干支。
         /// </summary>
