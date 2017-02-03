@@ -76,16 +76,19 @@ namespace HuaheBase
                 l.本爻.五神 = 十神.Calc5(me, benyao.干支.Zhi, kurz);
                 l.本爻.阴阳 = (阴阳)this.本卦.阴阳(idx);
 
-                GuaYao bianyao = new GuaYao() { 干支 = this.变卦.干支(idx) };
-                l.变爻 = bianyao;
-                l.变爻.五神 = 十神.Calc5(me, bianyao.干支.Zhi, kurz);
-                l.变爻.阴阳 = (阴阳)this.变卦.阴阳(idx);
-
-                if(l.本爻.阴阳 != l.变爻.阴阳)
+                if(this.本卦 != this.变卦)
                 {
-                    l.本爻.阴阳 = (阴阳)(this.本卦.阴阳(idx) + 2);
-                }
+                    GuaYao bianyao = new GuaYao() { 干支 = this.变卦.干支(idx) };
+                    l.变爻 = bianyao;
+                    l.变爻.五神 = 十神.Calc5(me, bianyao.干支.Zhi, kurz);
+                    l.变爻.阴阳 = (阴阳)this.变卦.阴阳(idx);
 
+                    if (l.本爻.阴阳 != l.变爻.阴阳)
+                    {
+                        l.本爻.阴阳 = (阴阳)(this.本卦.阴阳(idx) + 2);
+                    }
+                }
+                
                 idx++;
             });
         }
@@ -126,8 +129,18 @@ namespace HuaheBase
         public GuaYao 变爻 { get; internal set; }
 
         public string 世应 { get; internal set; }
-    }
 
+        public string[] Text()
+        {
+            return new string[]
+            {
+                this.六神,
+                this.伏爻.干支 != this.本爻.干支? this.伏爻.ToString() : string.Empty,
+                this.本爻.ToString(),
+                this.变爻?.ToString(),
+            };
+        }
+    }
     public class GuaYao
     {
         internal GuaYao() { }
@@ -137,5 +150,18 @@ namespace HuaheBase
         public string 五神 { get; internal set; }
 
         public GanZhi 干支 { get; internal set; }
+
+        public override string ToString()
+        {
+            bool kurz = this.五神.Length == 1;
+            if(kurz)
+            {
+                return this.五神 + this.干支.Zhi.Name;
+            }
+            else
+            {
+                return this.五神 + this.干支.Zhi.Name + this.干支.Zhi.五行.Name;
+            }
+        }
     }
 }
