@@ -107,9 +107,72 @@ namespace HuaheBase
             }
         }
 
+        public GanZhi 干支(int index)
+        {
+            if (index < 3 && index >= 0)
+            {
+                return this.下卦.干支(index);
+            }
+            else if (index >= 3 && index < 6)
+            {
+                return this.上卦.干支(index);
+            }
+
+            return null;
+        }
+
+        public int 阴阳(int index)
+        {
+            if (index < 3 && index >= 0)
+            {
+                return this.下卦.阴阳(index);
+            }
+            else if (index >= 3 && index < 6)
+            {
+                return this.上卦.阴阳(index);
+            }
+
+            return -1;
+        }
+
         public override string ToString()
         {
             return this.Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Gua64 gua = obj as Gua64;
+            return obj is Gua64 && this.Index == gua.Index;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public static bool operator ==(Gua64 a, Gua64 b)
+        {
+            if (a is Gua64)
+            {
+                return a.Equals(b);
+            }
+            else
+            {
+                return b is Gua64 ? false : true;
+            }
+        }
+
+        public static bool operator !=(Gua64 a, Gua64 b)
+        {
+            if (a is Gua64)
+            {
+                return !a.Equals(b);
+            }
+            else
+            {
+                return b is Gua64 ? true : false;
+            }
         }
 
         /// <summary>

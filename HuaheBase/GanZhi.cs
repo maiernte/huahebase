@@ -139,6 +139,11 @@ namespace HuaheBase
             return obj is GanZhi && this.Name == gz.Name;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public static bool operator == (GanZhi a, GanZhi b)
         {
             if(a is GanZhi)

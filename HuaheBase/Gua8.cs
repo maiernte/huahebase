@@ -99,7 +99,16 @@ namespace HuaheBase
             }
 
             throw new Exception("爻位超出范围了！");
-            
+        }
+
+        /// <summary>
+        /// 0 = 阴, 1 = 阳
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns></returns>
+        public int 阴阳(int idx)
+        {
+            return (this.Index >> (idx % 3)) % 2;
         }
 
         private static void Initial()

@@ -1,6 +1,7 @@
 ﻿using System;
 using HuaheBase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace HuaheBaseUnitTest
 {
@@ -246,6 +247,149 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual("螣蛇", gua.Lines[3].六神);
             Assert.AreEqual("白虎", gua.Lines[4].六神);
             Assert.AreEqual("玄武", gua.Lines[5].六神);
+        }
+
+        [TestMethod]
+        public void Gua神煞Test()
+        {
+            Gua gua = new Gua("震为雷", "地雷复", HHTime.Parse("/寅/辛酉/"));
+            Dictionary<string, string> 神煞 = new Dictionary<string, string>();
+            gua.神煞.ForEach(ss => 神煞[ss.Name] = string.Join("", ss.Calc() ?? new string[] { "-" }));
+            Assert.AreEqual("酉", 神煞["将星"]);
+            Assert.AreEqual("申", 神煞["羊刃"]);
+            Assert.AreEqual("酉", 神煞["禄神"]);
+            Assert.AreEqual("丑", 神煞["华盖"]);
+            Assert.AreEqual("子", 神煞["文昌"]);
+            Assert.AreEqual("未", 神煞["谋星"]);
+            Assert.AreEqual("戌", 神煞["天喜"]);
+            Assert.AreEqual("丑", 神煞["天医"]);
+            Assert.AreEqual("亥", 神煞["驿马"]);
+            Assert.AreEqual("午", 神煞["桃花"]);
+            Assert.AreEqual("卯", 神煞["灾煞"]);
+            Assert.AreEqual("寅", 神煞["劫煞"]);
+            Assert.AreEqual("寅午", 神煞["贵人"]);
+            Assert.AreEqual("子丑", 神煞["旬空"]);
+        }
+
+        [TestMethod]
+        public void OperatorTest()
+        {
+            Gua64 gua1 = new Gua64(1, 2);
+            Gua64 gua2 = new Gua64("震为雷", "坎为水");
+            Gua64 gua3 = new Gua64(1, 1);
+            Assert.AreEqual(gua1.Index, gua2.Index, "index");
+            Assert.IsTrue(gua1.Equals(gua2));
+            Assert.IsTrue(gua1 == gua2);
+            Assert.IsTrue(gua1 != gua3);
+        }
+
+        [TestMethod]
+        public void 伏爻Test()
+        {
+            Gua gua = new Gua("山火贲", "离为火", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("兄弟", gua.Lines[0].伏爻.五神);
+            Assert.AreEqual("丙辰", gua.Lines[0].伏爻.干支.Name);
+
+            Assert.AreEqual("父母", gua.Lines[1].伏爻.五神);
+            Assert.AreEqual("丙午", gua.Lines[1].伏爻.干支.Name);
+
+            Assert.AreEqual("子孙", gua.Lines[2].伏爻.五神);
+            Assert.AreEqual("丙申", gua.Lines[2].伏爻.干支.Name);
+
+            gua = new Gua("火雷噬嗑", "山天大畜", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("妻财", gua.Lines[0].伏爻.五神);
+            Assert.AreEqual("辛丑", gua.Lines[0].伏爻.干支.Name);
+
+            Assert.AreEqual("父母", gua.Lines[1].伏爻.五神);
+            Assert.AreEqual("辛亥", gua.Lines[1].伏爻.干支.Name);
+
+            Assert.AreEqual("官鬼", gua.Lines[2].伏爻.五神);
+            Assert.AreEqual("辛酉", gua.Lines[2].伏爻.干支.Name);
+
+            Assert.AreEqual("妻财", gua.Lines[3].伏爻.五神);
+            Assert.AreEqual("辛未", gua.Lines[3].伏爻.干支.Name);
+
+            Assert.AreEqual("子孙", gua.Lines[4].伏爻.五神);
+            Assert.AreEqual("辛巳", gua.Lines[4].伏爻.干支.Name);
+
+            Assert.AreEqual("兄弟", gua.Lines[5].伏爻.五神);
+            Assert.AreEqual("辛卯", gua.Lines[5].伏爻.干支.Name);
+        }
+
+        [TestMethod]
+        public void 本爻Test()
+        {
+            Gua gua = new Gua("火雷噬嗑", "山天大畜", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("父母", gua.Lines[0].本爻.五神);
+            Assert.AreEqual("庚子", gua.Lines[0].本爻.干支.Name);
+            Assert.AreEqual("", gua.Lines[0].世应);
+            Assert.AreEqual(1, gua.本卦.阴阳(0));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[0].本爻.阴阳);
+
+            Assert.AreEqual("兄弟", gua.Lines[1].本爻.五神);
+            Assert.AreEqual("庚寅", gua.Lines[1].本爻.干支.Name);
+            Assert.AreEqual("应", gua.Lines[1].世应);
+            Assert.AreEqual(0, gua.本卦.阴阳(1));
+            Assert.AreEqual(阴阳.老阴, gua.Lines[1].本爻.阴阳);
+
+            Assert.AreEqual("妻财", gua.Lines[2].本爻.五神);
+            Assert.AreEqual("庚辰", gua.Lines[2].本爻.干支.Name);
+            Assert.AreEqual("", gua.Lines[2].世应);
+            Assert.AreEqual(0, gua.本卦.阴阳(2));
+            Assert.AreEqual(阴阳.老阴, gua.Lines[2].本爻.阴阳);
+
+            Assert.AreEqual("官鬼", gua.Lines[3].本爻.五神);
+            Assert.AreEqual("己酉", gua.Lines[3].本爻.干支.Name);
+            Assert.AreEqual("", gua.Lines[3].世应);
+            Assert.AreEqual(1, gua.本卦.阴阳(3));
+            Assert.AreEqual(阴阳.老阳, gua.Lines[3].本爻.阴阳);
+
+            Assert.AreEqual("妻财", gua.Lines[4].本爻.五神);
+            Assert.AreEqual("己未", gua.Lines[4].本爻.干支.Name);
+            Assert.AreEqual("世", gua.Lines[4].世应);
+            Assert.AreEqual(0, gua.本卦.阴阳(4));
+            Assert.AreEqual(阴阳.少阴, gua.Lines[4].本爻.阴阳);
+
+            Assert.AreEqual("子孙", gua.Lines[5].本爻.五神);
+            Assert.AreEqual("己巳", gua.Lines[5].本爻.干支.Name);
+            Assert.AreEqual("", gua.Lines[5].世应);
+            Assert.AreEqual(1, gua.本卦.阴阳(5));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[5].本爻.阴阳);
+        }
+
+        [TestMethod]
+        public void 变爻Test()
+        {
+            Gua gua = new Gua("火雷噬嗑", "山天大畜", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("父母", gua.Lines[0].变爻.五神);
+            Assert.AreEqual("甲子", gua.Lines[0].变爻.干支.Name);
+            Assert.AreEqual(1, gua.变卦.阴阳(0));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[0].变爻.阴阳);
+
+            Assert.AreEqual("兄弟", gua.Lines[1].变爻.五神);
+            Assert.AreEqual("甲寅", gua.Lines[1].变爻.干支.Name);
+            Assert.AreEqual(1, gua.变卦.阴阳(1));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[1].变爻.阴阳);
+
+            Assert.AreEqual("妻财", gua.Lines[2].变爻.五神);
+            Assert.AreEqual("甲辰", gua.Lines[2].变爻.干支.Name);
+            Assert.AreEqual(1, gua.变卦.阴阳(2));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[2].变爻.阴阳);
+
+            Assert.AreEqual("妻财", gua.Lines[3].变爻.五神);
+            Assert.AreEqual("丙戌", gua.Lines[3].变爻.干支.Name);
+            Assert.AreEqual(0, gua.变卦.阴阳(3));
+            Assert.AreEqual(阴阳.少阴, gua.Lines[3].变爻.阴阳);
+
+            Assert.AreEqual("父母", gua.Lines[4].变爻.五神);
+            Assert.AreEqual("丙子", gua.Lines[4].变爻.干支.Name);
+            Assert.AreEqual(0, gua.变卦.阴阳(4));
+            Assert.AreEqual(阴阳.少阴, gua.Lines[4].变爻.阴阳);
+
+            Assert.AreEqual("兄弟", gua.Lines[5].变爻.五神);
+            Assert.AreEqual("丙寅", gua.Lines[5].变爻.干支.Name);
+            Assert.AreEqual(1, gua.变卦.阴阳(5));
+            Assert.AreEqual(阴阳.少阳, gua.Lines[5].变爻.阴阳);
         }
     }
 }
