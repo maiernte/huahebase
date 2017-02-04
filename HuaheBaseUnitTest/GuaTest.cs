@@ -391,5 +391,25 @@ namespace HuaheBaseUnitTest
             Assert.AreEqual(1, gua.变卦.阴阳(5));
             Assert.AreEqual(阴阳.少阳, gua.Lines[5].变爻.阴阳);
         }
+
+        [TestMethod]
+        public void LineTextTest()
+        {
+            Gua gua = new Gua("火雷噬嗑", "山天大畜", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("白虎/妻财丑土/父母子水/父母子水//少阳",   string.Join("/", gua.Lines[0].Text));
+            Assert.AreEqual("玄武/父母亥水/兄弟寅木/兄弟寅木/应/老阴", string.Join("/", gua.Lines[1].Text));
+            Assert.AreEqual("青龙/官鬼酉金/妻财辰土/妻财辰土//老阴",   string.Join("/", gua.Lines[2].Text));
+            Assert.AreEqual("朱雀/妻财未土/官鬼酉金/妻财戌土//老阳",   string.Join("/", gua.Lines[3].Text));
+            Assert.AreEqual("勾陈/子孙巳火/妻财未土/父母子水/世/少阴", string.Join("/", gua.Lines[4].Text));
+            Assert.AreEqual("螣蛇/兄弟卯木/子孙巳火/兄弟寅木//少阳",   string.Join("/", gua.Lines[5].Text));
+
+            gua = new Gua("火雷噬嗑", "火雷噬嗑", HHTime.Parse("/寅/辛酉/"));
+            Assert.AreEqual("白虎/妻财丑土/父母子水///少阳",   string.Join("/", gua.Lines[0].Text));
+            Assert.AreEqual("玄武/父母亥水/兄弟寅木//应/少阴", string.Join("/", gua.Lines[1].Text));
+            Assert.AreEqual("青龙/官鬼酉金/妻财辰土///少阴",   string.Join("/", gua.Lines[2].Text));
+            Assert.AreEqual("朱雀/妻财未土/官鬼酉金///少阳",   string.Join("/", gua.Lines[3].Text));
+            Assert.AreEqual("勾陈/子孙巳火/妻财未土//世/少阴", string.Join("/", gua.Lines[4].Text));
+            Assert.AreEqual("螣蛇/兄弟卯木/子孙巳火///少阳",   string.Join("/", gua.Lines[5].Text));
+        }
     }
 }

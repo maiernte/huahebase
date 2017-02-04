@@ -130,15 +130,20 @@ namespace HuaheBase
 
         public string 世应 { get; internal set; }
 
-        public string[] Text()
+        public string[] Text
         {
-            return new string[]
+            get
             {
-                this.六神,
-                this.伏爻.干支 != this.本爻.干支? this.伏爻.ToString() : string.Empty,
-                this.本爻.ToString(),
-                this.变爻?.ToString(),
-            };
+                return new string[]
+               {
+                    this.六神,
+                    this.伏爻.干支 != this.本爻.干支? this.伏爻.ToString() : string.Empty,
+                    this.本爻.ToString(),
+                    this.变爻 == null? string.Empty:this.变爻.ToString(),
+                    this.世应,
+                    this.本爻.阴阳.ToString()
+               };
+            } 
         }
     }
     public class GuaYao
