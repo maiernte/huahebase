@@ -1,4 +1,1 @@
-"# huahebase" 
-git add .
-git commit -m "commit text..."
-git push -u origin master
+易学函数库的C#实现
